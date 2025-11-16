@@ -1,0 +1,20 @@
+services:
+  frontend:
+    image: node:24-alpine
+    volumes:
+      - '.:/app'
+    ports:
+      - '5173:5173'
+    environment:
+      - NODE_ENV=development
+    command: [ 'npm', 'run', 'dev' ]
+    user: "${UID:-1000}:${GID:-1000}"
+    env_file:
+      - .env
+    working_dir: /app
+    networks:
+      - caddie_network
+
+networks:
+  caddie_network:
+    external: true
