@@ -11,9 +11,12 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"format": "prettier --write .",
-		"lint": "prettier --check . && eslint .",
-		"test:unit": "vitest",
+		"format": "npm run format:svelte && npm run format:eslint",
+		"format:svelte": "prettier --write \"**/*.svelte\"",
+		"format:eslint": "eslint --fix .",
+		"lint": "npm run lint:svelte && npm run lint:eslint",
+		"lint:svelte": "prettier --check \"**/*.svelte\"",
+		"lint:eslint": "eslint .",
 		"test": "npm run test:unit -- --run"
 	},
 	"devDependencies": {
