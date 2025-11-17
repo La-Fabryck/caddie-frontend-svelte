@@ -14,6 +14,8 @@ services:
     working_dir: /app
     networks:
       - caddie_network
+    tty: true        # Add this
+    stdin_open: true # Add this
 
 networks:
   caddie_network:
