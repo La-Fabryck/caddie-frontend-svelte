@@ -5,11 +5,7 @@ import { playwright } from '@vitest/browser-playwright';
 import { sveltekit } from '@sveltejs/kit/vite';
 
 export default defineConfig({
-	plugins: [
-		tailwindcss(),
-		sveltekit(),
-		devtoolsJson(),
-	],
+	plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
 	server: {
 		host: '0.0.0.0',
 		proxy: {

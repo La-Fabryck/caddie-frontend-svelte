@@ -5,5 +5,5 @@
  * @returns URL
  */
 export function buildApiURL(route: string) {
-  return new URL(`${import.meta.env['VITE_API_BASE_URL']}${route}`, window.location.origin);
+	return new URL(`${import.meta.env['VITE_API_BASE_URL']}${route}`, window.location.origin);
 }

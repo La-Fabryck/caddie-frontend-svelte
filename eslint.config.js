@@ -1,10 +1,11 @@
-import prettier from 'eslint-config-prettier';
-import { fileURLToPath } from 'node:url';
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
-import svelte from 'eslint-plugin-svelte';
 import { defineConfig } from 'eslint/config';
+import prettier from 'eslint-config-prettier';
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended';
+import svelte from 'eslint-plugin-svelte';
 import globals from 'globals';
+import { fileURLToPath } from 'node:url';
 import ts from 'typescript-eslint';
 import svelteConfig from './svelte.config.js';
 
@@ -16,6 +17,7 @@ export default defineConfig(
 	...ts.configs.recommended,
 	...svelte.configs.recommended,
 	prettier,
+	eslintPluginPrettierRecommended,
 	...svelte.configs.prettier,
 	{
 		languageOptions: {
@@ -26,7 +28,7 @@ export default defineConfig(
 			// see: https://typescript-eslint.io/troubleshooting/faqs/eslint/#i-get-errors-from-the-no-undef-rule-about-global-variables-not-being-defined-even-though-there-are-no-typescript-errors
 			'no-undef': 'off',
 			// TODO: disable during porting - re-enable later
-			'svelte/no-navigation-without-resolve': 'off',
+			'svelte/no-navigation-without-resolve': 'off'
 		}
 	},
 	{
