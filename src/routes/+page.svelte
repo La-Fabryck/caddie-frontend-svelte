@@ -1,41 +1,18 @@
 <script lang="ts">
 	import { Plus } from 'lucide-svelte';
-	// import Menu from '@/components/menu/Menu.svelte';
-	// import { useQuery } from '@/hooks';
-	import Loader from '$lib/components/loader.svelte';
-	import type { List } from '$lib/reponse/list';
 	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
-	import { buildApiURL } from '$lib/helpers/url';
-	import { onMount } from 'svelte';
 	import { buttonVariants } from '$lib/components/ui/button';
+	import type { PageProps } from './$types';
+	import Loader from '$lib/components/loader.svelte';
+	import { onMount } from 'svelte';
 
+	let props: PageProps = $props();
 	let isLoading = $state(true);
-	let allLists = $state<List[]>([]);
-	let error = $state<string | null>(null);
+	const { data } = props;
+	const { data: allLists = [] } = data;
 
-	async function fetchLists() {
-		isLoading = true;
-		error = null;
-
-		try {
-			const response = await fetch(buildApiURL('/list'));
-
-			if (!response.ok) {
-				throw new Error(`Failed to fetch lists: ${response.status}`);
-			}
-
-			allLists = await response.json();
-		} catch (err) {
-			error = err instanceof Error ? err.message : 'An error occurred';
-			console.log(error);
-			allLists = [];
-		} finally {
-			isLoading = false;
-		}
-	}
-
-	onMount(() => {
-		fetchLists();
+	onMount(async () => {
+		isLoading = data.isLoading;
 	});
 </script>
 
