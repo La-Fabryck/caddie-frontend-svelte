@@ -1,7 +1,7 @@
-import { useQuery } from '$lib/fetch';
+import { fetchData } from '$lib/fetch';
 import type { List } from '$lib/response/list';
 import type { PageLoad } from './$types';
 
-export const load: PageLoad = async () => {
-	return useQuery<List[]>({ url: '/api/list' });
+export const load: PageLoad = async ({ fetch, url }) => {
+	return fetchData<List[]>({ fetch, url: `${url}api/list` });
 };

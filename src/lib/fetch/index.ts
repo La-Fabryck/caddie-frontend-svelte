@@ -10,8 +10,8 @@ type HTTPMethods =
 	| 'TRACE';
 
 type GetConfig = {
+	fetch: typeof global.fetch;
 	url: URL | string;
-	//   key: string;
 	options?: {
 		noCache?: boolean;
 		ttl?: number;
@@ -55,28 +55,20 @@ async function extractContent<T>(response: Response): Promise<T | null> {
 	return hasContent ? ((await response.json()) as T) : null;
 }
 
-export async function useQuery<TResponse = unknown>({ url }: GetConfig) {
-	try {
-		const response = await fetch(prepareRequest(url));
+export async function fetchData<TResponse = unknown>({ url, fetch }: GetConfig) {
+	const response = await fetch(prepareRequest(url));
 
-		if (response.ok) {
-			return {
-				data: await extractContent<TResponse>(response),
-				isLoading: false,
-				error: null
-			};
-		} else {
-			return {
-				data: null,
-				isLoading: false,
-				error: await extractContent<TResponse>(response)
-			};
-		}
-	} catch (err) {
+	if (response.ok) {
 		return {
-			lists: [],
+			data: await extractContent<TResponse>(response),
 			isLoading: false,
-			error: err instanceof Error ? err.message : 'Failed to load lists'
+			error: null
+		};
+	} else {
+		return {
+			data: null,
+			isLoading: false,
+			error: await extractContent<TResponse>(response)
 		};
 	}
 }
