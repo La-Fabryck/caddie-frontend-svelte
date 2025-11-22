@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Plus } from 'lucide-svelte';
+	import { Plus } from '@lucide/svelte';
 	import { onMount } from 'svelte';
 	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
 	import { buttonVariants, Spinner } from '$lib/components/ui';
