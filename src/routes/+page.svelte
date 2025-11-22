@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { Plus } from 'lucide-svelte';
-	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
-	import { buttonVariants } from '$lib/components/ui/button';
-	import type { PageProps } from './$types';
-	import Loader from '$lib/components/loader.svelte';
 	import { onMount } from 'svelte';
+	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
+	import { buttonVariants, Spinner } from '$lib/components/ui';
+	import type { PageProps } from './$types';
 
 	let props: PageProps = $props();
 	let isLoading = $state(true);
@@ -29,7 +28,7 @@
 </div>
 
 {#if isLoading}
-	<Loader />
+	<Spinner class="size-20" />
 {:else if !allLists?.length}
 	<p>Créé ta première liste nondidju !</p>
 {:else}
