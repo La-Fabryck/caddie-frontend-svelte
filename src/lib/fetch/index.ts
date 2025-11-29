@@ -12,20 +12,15 @@ type HTTPMethods =
 type GetConfig = {
 	fetch: typeof global.fetch;
 	url: URL | string;
-	options?: {
-		noCache?: boolean;
-		ttl?: number;
-	};
 };
 
 function prepareRequest(url: URL | string, method: HTTPMethods = 'GET', body?: unknown): Request {
 	const headers = new Headers({
-		Accept: 'application/json',
-		'Content-Type': 'application/json'
+		Accept: 'application/json'
 	});
 
-	if (body == null) {
-		headers.delete('Content-Type');
+	if (body != null) {
+		headers.append('Content-Type', 'application/json');
 	}
 
 	return new Request(url, {
@@ -55,8 +50,8 @@ async function extractContent<T>(response: Response): Promise<T | null> {
 	return hasContent ? ((await response.json()) as T) : null;
 }
 
-export async function fetchData<TResponse = unknown>({ url, fetch }: GetConfig) {
-	const response = await fetch(prepareRequest(url));
+export async function fetchData<TResponse = unknown>({ fetch: fetchInstance, url }: GetConfig) {
+	const response = await fetchInstance(prepareRequest(url));
 
 	if (response.ok) {
 		return {
