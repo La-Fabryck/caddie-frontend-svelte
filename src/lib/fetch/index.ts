@@ -56,13 +56,11 @@ export async function fetchData<TResponse = unknown>({ fetch: fetchInstance, url
 	if (response.ok) {
 		return {
 			data: await extractContent<TResponse>(response),
-			isLoading: false,
 			error: null
 		};
 	} else {
 		return {
 			data: null,
-			isLoading: false,
 			error: await extractContent<TResponse>(response)
 		};
 	}
