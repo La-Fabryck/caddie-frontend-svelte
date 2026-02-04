@@ -3,6 +3,7 @@
 	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
 	import { buttonVariants, Spinner } from '$lib/components/ui';
 	import type { PageProps } from './$types';
+	import { resolve } from '$app/paths';
 
 	let { data: listData }: PageProps = $props();
 </script>
@@ -19,7 +20,7 @@
 	<h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">Mes listes de courses</h2>
 </div>
 
-{#await listData}
+{#await listData.lists}
 	<Spinner class="size-20" />
 {:then listData}
 	{#if !listData.data?.length}
@@ -28,9 +29,8 @@
 		<ul>
 			{#each listData.data as list (list.id)}
 				<li>
-					<!-- eslint-disable-next-line svelte/no-navigation-without-resolve -->
 					<a
-						href="/list/{list.id}"
+						href={resolve(`/list/${list.id}`)}
 						class="bg-surface0 hover:bg-surface1 my-2 flex justify-between gap-x-6 p-5"
 					>
 						<div class="flex min-w-0 gap-x-4">

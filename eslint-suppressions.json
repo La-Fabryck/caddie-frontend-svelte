@@ -1,12 +1,12 @@
 {
   "src/routes/+layout.svelte": {
     "svelte/no-navigation-without-resolve": {
-      "count": 3
+      "count": 2
     }
   },
   "src/routes/+page.svelte": {
     "svelte/no-navigation-without-resolve": {
-      "count": 2
+      "count": 1
     }
   }
 }

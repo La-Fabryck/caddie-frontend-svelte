@@ -3,6 +3,7 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 	import { NavigationMenu } from 'bits-ui';
+	import { resolve } from '$app/paths';
 
 	let { children } = $props();
 </script>
@@ -21,7 +22,7 @@
 				<NavigationMenu.Item>
 					<NavigationMenu.Link>
 						{#snippet child()}
-							<a href="/" class={navigationMenuTriggerStyle()}>Home</a>
+							<a href={resolve('/')} class={navigationMenuTriggerStyle()}>Home</a>
 						{/snippet}
 					</NavigationMenu.Link>
 				</NavigationMenu.Item>

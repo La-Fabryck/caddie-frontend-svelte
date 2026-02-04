@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "concurrently -n \"VITE,SVELTE-CHECK\" -c \"blue,green\" \"npm run dev:vite\" \"npm run dev:watch\"",
 		"dev:vite": "vite dev",
-		"dev:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"dev:watch": "npm run check -- --watch",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",

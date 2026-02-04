@@ -14,13 +14,23 @@ type GetConfig = {
 	url: URL | string;
 };
 
+type MutateConfig = GetConfig & {
+	method: Extract<HTTPMethods, 'PATCH' | 'POST' | 'PUT'>;
+	body: unknown;
+};
+
+/**
+ * Builds a Request with JSON Accept and optional body.
+ * Mirrors prepareRequest from caddie-frontend-preact/src/hooks/use-fetch.ts (no cache/signals).
+ */
 function prepareRequest(url: URL | string, method: HTTPMethods = 'GET', body?: unknown): Request {
 	const headers = new Headers({
-		Accept: 'application/json'
+		Accept: 'application/json',
+		'Content-Type': 'application/json'
 	});
 
-	if (body != null) {
-		headers.append('Content-Type', 'application/json');
+	if (body == null) {
+		headers.delete('Content-Type');
 	}
 
 	return new Request(url, {
@@ -50,7 +60,10 @@ async function extractContent<T>(response: Response): Promise<T | null> {
 	return hasContent ? ((await response.json()) as T) : null;
 }
 
-export async function fetchData<TResponse = unknown>({ fetch: fetchInstance, url }: GetConfig) {
+export async function fetchData<TResponse = unknown, TError = unknown>({
+	fetch: fetchInstance,
+	url
+}: GetConfig) {
 	const response = await fetchInstance(prepareRequest(url));
 
 	if (response.ok) {
@@ -61,7 +74,28 @@ export async function fetchData<TResponse = unknown>({ fetch: fetchInstance, url
 	} else {
 		return {
 			data: null,
-			error: await extractContent<TResponse>(response)
+			error: await extractContent<TError>(response)
+		};
+	}
+}
+
+export async function mutateData<TResponse = unknown, TError = unknown>({
+	fetch: fetchInstance,
+	url,
+	method,
+	body
+}: MutateConfig) {
+	const response = await fetchInstance(prepareRequest(url, method, body));
+
+	if (response.ok) {
+		return {
+			data: await extractContent<TResponse>(response),
+			error: null
+		};
+	} else {
+		return {
+			data: null,
+			error: await extractContent<TError>(response)
 		};
 	}
 }
