@@ -1,5 +1,4 @@
-import Root from './button.svelte';
-import {
+import Root, {
 	type ButtonProps,
 	type ButtonSize,
 	type ButtonVariant,
