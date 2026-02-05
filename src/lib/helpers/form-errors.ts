@@ -15,6 +15,11 @@ export type BackendFormErrors<T> = Record<ErrorKeys<T>, ErrorMessage[]>;
 /** Superforms: each key maps to string[] (field errors or _errors for form-level). */
 export type ValidationErrorsLike = Record<string, string[]>;
 
+/** Superforms errors object shape for a given schema (field keys + _errors). Keys optional so {} is valid. */
+export type FormErrorsForSchema<T extends Record<string, unknown>> = Partial<
+	Record<keyof T | '_errors', string[]>
+>;
+
 export function backendErrorsToFormErrors<T extends Record<string, unknown>>(
 	error: BackendFormErrors<T>,
 	errorMessages: Record<string, string>

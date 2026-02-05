@@ -7,12 +7,12 @@
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
-	import { loginErrorMessages } from '$lib/messages/login';
-	import { initialLoginForm } from './schema';
+	import { userCreationErrorMessages } from '$lib/messages/user-creation';
+	import { initialCreateAccountForm } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
 
-	const form = superForm(initialLoginForm(), {
+	const form = superForm(initialCreateAccountForm(), {
 		SPA: true,
 		validators: false
 	});
@@ -23,7 +23,7 @@
 
 	async function handleSubmit() {
 		submitting = true;
-		const url = buildApiUrl(page.url.origin, 'authentication/login');
+		const url = buildApiUrl(page.url.origin, 'users');
 		const result = await mutateData<null, Record<string, { message: string }[]>>({
 			fetch,
 			url: url.toString(),
@@ -32,23 +32,21 @@
 		});
 		submitting = false;
 
-		// Success: no error (response.ok). Body may be empty so result.data can be null.
 		if (result.error == null) {
-			window.localStorage.setItem('isAuthenticated', '1');
 			goto(resolve('/'), { replaceState: true });
 		} else {
-			const formErrors = backendErrorsToFormErrors(result.error, loginErrorMessages);
+			const formErrors = backendErrorsToFormErrors(result.error, userCreationErrorMessages);
 			errors.set(formErrors, { force: true });
 		}
 	}
 </script>
 
-<h1 class="text-center">S'authentifier</h1>
+<h1 class="mb-8 text-center">Créer son compte</h1>
 <a
-	class={buttonVariants({ variant: 'link', class: 'my-8 w-full text-center' })}
-	href={resolve('/create-account')}
+	class={buttonVariants({ variant: 'link', class: 'mb-8 w-full text-center' })}
+	href={resolve('/login')}
 >
-	Vous n'avez pas encore de compte ? Créer votre compte <SquareArrowOutUpRight />
+	Vous avez déjà un compte ? S'authentifier <SquareArrowOutUpRight />
 </a>
 
 <form
@@ -67,7 +65,6 @@
 		</ul>
 	{/if}
 
-	<!-- Form.ElementField passes { constraints, errors, tainted, value }; we don't use them (FieldErrors reads from context). -->
 	<Form.ElementField {form} name="email">
 		{#snippet children(_)}
 			<Form.Control>
@@ -83,6 +80,24 @@
 				{/snippet}
 			</Form.Control>
 			<Form.Description>Rentre ton email.</Form.Description>
+			<Form.FieldErrors />
+		{/snippet}
+	</Form.ElementField>
+
+	<Form.ElementField {form} name="name">
+		{#snippet children(_)}
+			<Form.Control>
+				{#snippet children({ props: controlProps })}
+					<Form.Label>Ton surnom</Form.Label>
+					<Input
+						{...controlProps}
+						placeholder="Ton surnom par défaut pour les listes."
+						value={$formData.name}
+						oninput={(e) => formData.update((d) => ({ ...d, name: e.currentTarget.value }))}
+					/>
+				{/snippet}
+			</Form.Control>
+			<Form.Description>Ton surnom de 2 lettres minimum, on est sérieux ici.</Form.Description>
 			<Form.FieldErrors />
 		{/snippet}
 	</Form.ElementField>

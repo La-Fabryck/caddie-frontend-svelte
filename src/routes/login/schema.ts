@@ -1,3 +1,5 @@
+import type { FormErrorsForSchema } from '$lib/helpers/form-errors';
+
 /**
  * Login form shape. No client-side validation; errors come from the backend.
  */
@@ -17,7 +19,7 @@ export function initialLoginForm() {
 		id: '',
 		valid: true,
 		posted: false,
-		errors: {} as Record<keyof LoginSchema | '_errors', string[] | undefined>,
+		errors: {} satisfies FormErrorsForSchema<LoginSchema>,
 		data: initialLoginData
 	};
 }
