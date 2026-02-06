@@ -4,6 +4,7 @@
 	import ShoppingListHeader from './shopping-list-header.svelte';
 	import ToggleActionGroup, { type Action } from './toggle-action-group.svelte';
 	import RedirectWhenEmpty from './redirect-when-empty.svelte';
+	import RedirectWhenNotFound from './redirect-when-not-found.svelte';
 	import { Spinner } from '$lib/components/ui';
 	import type { PageProps } from './$types';
 
@@ -16,10 +17,10 @@
 	<Spinner class="size-20" />
 {:then [listResult, itemsResult]}
 	{#if listResult.data == null}
-		<p>Not found</p>
+		<RedirectWhenNotFound url="/" />
 	{:else}
 		<RedirectWhenEmpty listId={listResult.data.id} items={itemsResult.data} />
-		<ToggleActionGroup {action} onActionChange={(v) => (action = v)} />
+		<ToggleActionGroup {action} onActionChange={(newAction) => (action = newAction)} />
 		<ShoppingListHeader list={listResult.data} />
 		<ShoppingListContent
 			{action}
