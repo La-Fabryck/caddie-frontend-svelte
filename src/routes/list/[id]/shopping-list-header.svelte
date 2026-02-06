@@ -4,10 +4,6 @@
 	type ShoppingListHeaderProps = { list: List };
 
 	let { list }: ShoppingListHeaderProps = $props();
-
-	// export let list: List;
-
-	// console.log(list);
 </script>
 
 <div class="mx-auto my-5 max-w-2xl lg:mx-0">
