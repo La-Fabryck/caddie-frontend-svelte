@@ -70,12 +70,7 @@
 					<Form.Control>
 						{#snippet children({ props: controlProps })}
 							<Form.Label>Nom de l'article</Form.Label>
-							<Input
-								{...controlProps}
-								placeholder="🍔 ou 🍫"
-								value={$formData.name}
-								oninput={(e) => formData.update((d) => ({ ...d, name: e.currentTarget.value }))}
-							/>
+							<Input {...controlProps} placeholder="🍔 ou 🍫" bind:value={$formData.name} />
 						{/snippet}
 					</Form.Control>
 					<Form.Description>Tu veux acheter quoi encore 🤌 ⁉️</Form.Description>

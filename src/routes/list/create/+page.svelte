@@ -63,12 +63,7 @@
 			<Form.Control>
 				{#snippet children({ props: controlProps })}
 					<Form.Label>Nom de la liste</Form.Label>
-					<Input
-						{...controlProps}
-						placeholder="Courses"
-						value={$formData.title}
-						oninput={(e) => formData.update((d) => ({ ...d, title: e.currentTarget.value }))}
-					/>
+					<Input {...controlProps} placeholder="Courses" bind:value={$formData.title} />
 				{/snippet}
 			</Form.Control>
 			<Form.Description>Donne un nom à ta liste.</Form.Description>
@@ -84,8 +79,7 @@
 					<Input
 						{...controlProps}
 						placeholder="Ton surnom que tout le monde verra"
-						value={$formData.pseudonym}
-						oninput={(e) => formData.update((d) => ({ ...d, pseudonym: e.currentTarget.value }))}
+						bind:value={$formData.pseudonym}
 					/>
 				{/snippet}
 			</Form.Control>

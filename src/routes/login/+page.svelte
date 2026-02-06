@@ -77,8 +77,7 @@
 						{...controlProps}
 						type="email"
 						placeholder="ton@email.com"
-						value={$formData.email}
-						oninput={(e) => formData.update((d) => ({ ...d, email: e.currentTarget.value }))}
+						bind:value={$formData.email}
 					/>
 				{/snippet}
 			</Form.Control>
@@ -96,8 +95,7 @@
 						{...controlProps}
 						type="password"
 						placeholder="Mot de passe super sécurisé"
-						value={$formData.password}
-						oninput={(e) => formData.update((d) => ({ ...d, password: e.currentTarget.value }))}
+						bind:value={$formData.password}
 					/>
 				{/snippet}
 			</Form.Control>
