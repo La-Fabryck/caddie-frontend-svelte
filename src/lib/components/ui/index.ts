@@ -5,7 +5,8 @@ export {
 	type ButtonSize,
 	type ButtonVariant
 } from './button';
+export { Checkbox } from './checkbox';
 export * from './form';
-export * from './input';
+export { Input } from './input';
 export * from './spinner';
 export { ToggleGroup, ToggleGroupItem } from './toggle-group';
