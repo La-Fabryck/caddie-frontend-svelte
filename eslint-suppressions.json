@@ -8,15 +8,5 @@
     "svelte/no-navigation-without-resolve": {
       "count": 2
     }
-  },
-  "src/routes/+page.svelte": {
-    "svelte/no-navigation-without-resolve": {
-      "count": 1
-    }
-  },
-  "src/routes/login/+page.svelte": {
-    "svelte/no-navigation-without-resolve": {
-      "count": 1
-    }
   }
 }

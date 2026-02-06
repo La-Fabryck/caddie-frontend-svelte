@@ -10,7 +10,7 @@
 
 <a
 	class={buttonVariants({ variant: 'default', size: 'lg', class: 'font-semibold' })}
-	href="/list/create"
+	href={resolve('/list/create')}
 >
 	<Plus />
 	Nouvelle liste
