@@ -107,3 +107,27 @@ export async function mutateData<TResponse = unknown, TError = unknown>({
 		};
 	}
 }
+
+export async function deleteData<TResponse = unknown, TError = unknown>({
+	fetch: fetchInstance,
+	url
+}: GetConfig) {
+	const response = await fetchInstance(prepareRequest(url, 'DELETE'));
+
+	if (response.ok) {
+		return {
+			status: response.status,
+			data: await extractContent<TResponse>(response),
+			error: null
+		};
+	} else {
+		const error = ((await extractContent<TError>(response)) ?? {
+			root: [{ message: 'REQUEST_FAILED' }]
+		}) as TError;
+		return {
+			status: response.status,
+			data: null,
+			error
+		};
+	}
+}

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import type { Item } from '$lib/response/item';
+	import { deleteData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
+	import type { Item } from '$lib/response/item';
 	import ItemCheckbox from './item-checkbox.svelte';
 
 	export type ItemToDeleteTuple = [string, () => Promise<void>];
@@ -16,7 +17,7 @@
 
 	async function doDelete() {
 		const url = buildApiUrl(page.url.origin, `list/${item.listId}/items/${item.id}`);
-		await fetch(url.toString(), { method: 'DELETE' });
+		await deleteData({ fetch, url: url.toString() });
 	}
 
 	const isChecked = $derived(itemsToDelete.some(([id]) => id === item.id));
