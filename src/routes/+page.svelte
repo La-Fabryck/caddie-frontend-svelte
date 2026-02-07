@@ -1,7 +1,8 @@
 <script lang="ts">
-	import { Plus } from '@lucide/svelte';
+	import { Plus, Settings } from '@lucide/svelte';
 	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
 	import { buttonVariants, Spinner } from '$lib/components/ui';
+	import Menu from '$lib/components/menu.svelte';
 	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
 
@@ -28,20 +29,15 @@
 	{:else}
 		<ul>
 			{#each listData.data as list (list.id)}
-				<li>
-					<a
-						href={resolve(`/list/${list.id}`)}
-						class="bg-surface0 hover:bg-surface1 my-2 flex justify-between gap-x-6 p-5"
-					>
-						<div class="flex min-w-0 gap-x-4">
-							<div class="min-w-0 flex-auto">
-								<p class="text-lg font-bold">{list.title}</p>
-								<p class="mt-1 truncate text-xs/5">
-									Créé le <time datetime={formatDateToISO(list.createdAt)}
-										>{formatDateToLongFormat(list.createdAt)}</time
-									>
-								</p>
-							</div>
+				<li class="bg-surface0 hover:bg-surface1 my-2 flex justify-between gap-x-6 p-5">
+					<a href={resolve(`/list/${list.id}`)} class="flex min-w-0 flex-auto gap-x-4">
+						<div class="min-w-0 flex-auto">
+							<p class="text-lg font-bold">{list.title}</p>
+							<p class="mt-1 truncate text-xs/5">
+								Créé le <time datetime={formatDateToISO(list.createdAt)}
+									>{formatDateToLongFormat(list.createdAt)}</time
+								>
+							</p>
 						</div>
 						<div class="flex flex-col items-center sm:items-end">
 							<div class="mt-1 flex items-center gap-x-1.5">
@@ -59,17 +55,18 @@
 									>
 								</p>
 							</div>
-							<div class="mt-2">
-								<!-- TODO: -->
-								<!-- <Menu items={[
-                { label: 'Modifier', path: `/list/${list.id}/edit` },
-                { label: 'Supprimer', path: `/list/${list.id}/delete` }
-              ]}>
-                <Settings size="36" />
-              </Menu> -->
-							</div>
 						</div>
 					</a>
+					<div class="mt-2 shrink-0">
+						<Menu
+							items={[
+								{ label: 'Modifier', path: `/list/${list.id}/edit` },
+								{ label: 'Supprimer', path: `/list/${list.id}/delete` }
+							]}
+						>
+							<Settings size={36} />
+						</Menu>
+					</div>
 				</li>
 			{/each}
 		</ul>

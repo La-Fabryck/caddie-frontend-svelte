@@ -30,7 +30,7 @@
 				<NavigationMenu.Item>
 					<NavigationMenu.Link>
 						{#snippet child()}
-							<a href="/login" class={navigationMenuTriggerStyle()}>Login</a>
+							<a href={resolve('/login')} class={navigationMenuTriggerStyle()}>Login</a>
 						{/snippet}
 					</NavigationMenu.Link>
 				</NavigationMenu.Item>
