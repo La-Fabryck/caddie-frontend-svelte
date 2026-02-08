@@ -6,9 +6,13 @@
 	import { Button, buttonVariants, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
+	import {
+		backendErrorsToFormErrors,
+		type BackendFormErrors,
+		type FormErrorsForSchema
+	} from '$lib/helpers/form-errors';
 	import { loginErrorMessages } from '$lib/messages/login';
-	import { initialLoginForm } from './schema';
+	import { initialLoginForm, type LoginSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
 
@@ -24,7 +28,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'authentication/login');
-		const result = await mutateData<null, Record<string, { message: string }[]>>({
+		const result = await mutateData<null, BackendFormErrors<LoginSchema>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -37,7 +41,10 @@
 			window.localStorage.setItem('isAuthenticated', '1');
 			goto(resolve('/'), { replaceState: true });
 		} else {
-			const formErrors = backendErrorsToFormErrors(result.error, loginErrorMessages);
+			const formErrors: FormErrorsForSchema<LoginSchema> = backendErrorsToFormErrors(
+				result.error,
+				loginErrorMessages
+			);
 			errors.set(formErrors, { force: true });
 		}
 	}

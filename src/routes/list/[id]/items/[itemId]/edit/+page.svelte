@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Spinner } from '$lib/components/ui';
 	import EditItemForm from './edit-item-form.svelte';
-	import { initialEditItemForm } from './schema';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
@@ -19,10 +18,7 @@
 			</h2>
 		</div>
 		{#key itemResult.data.id}
-			<EditItemForm
-				item={itemResult.data}
-				initialFormState={initialEditItemForm(itemResult.data)}
-			/>
+			<EditItemForm item={itemResult.data} />
 		{/key}
 	{/if}
 {/await}

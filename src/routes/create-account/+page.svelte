@@ -6,9 +6,13 @@
 	import { Button, buttonVariants, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
+	import {
+		backendErrorsToFormErrors,
+		type BackendFormErrors,
+		type FormErrorsForSchema
+	} from '$lib/helpers/form-errors';
 	import { userCreationErrorMessages } from '$lib/messages/user-creation';
-	import { initialCreateAccountForm } from './schema';
+	import { initialCreateAccountForm, type CreateAccountSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
 
@@ -24,7 +28,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'users');
-		const result = await mutateData<null, Record<string, { message: string }[]>>({
+		const result = await mutateData<null, BackendFormErrors<CreateAccountSchema>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -35,7 +39,10 @@
 		if (result.error == null) {
 			goto(resolve('/'), { replaceState: true });
 		} else {
-			const formErrors = backendErrorsToFormErrors(result.error, userCreationErrorMessages);
+			const formErrors: FormErrorsForSchema<CreateAccountSchema> = backendErrorsToFormErrors(
+				result.error,
+				userCreationErrorMessages
+			);
 			errors.set(formErrors, { force: true });
 		}
 	}

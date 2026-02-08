@@ -7,10 +7,14 @@
 	import { Button, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
+	import {
+		backendErrorsToFormErrors,
+		type BackendFormErrors,
+		type FormErrorsForSchema
+	} from '$lib/helpers/form-errors';
 	import { itemErrorMessages } from '$lib/messages/item';
 	import type { Item } from '$lib/response/item';
-	import { initialCreateItemForm } from './schema';
+	import { initialCreateItemForm, type CreateItemSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import type { PageProps } from './$types';
 
@@ -29,7 +33,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, `list/${listId}/items`);
-		const result = await mutateData<Item, Record<string, { message: string }[]>>({
+		const result = await mutateData<Item, BackendFormErrors<CreateItemSchema>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -41,7 +45,10 @@
 			await invalidateAll();
 			goto(resolve(`/list/${listId}`), { replaceState: true });
 		} else if (result.error != null) {
-			const formErrors = backendErrorsToFormErrors(result.error, itemErrorMessages);
+			const formErrors: FormErrorsForSchema<CreateItemSchema> = backendErrorsToFormErrors(
+				result.error,
+				itemErrorMessages
+			);
 			errors.set(formErrors, { force: true });
 		}
 	}

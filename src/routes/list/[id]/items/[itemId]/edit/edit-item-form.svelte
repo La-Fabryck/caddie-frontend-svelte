@@ -10,31 +10,24 @@
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
 	import { itemErrorMessages } from '$lib/messages/item';
 	import type { Item } from '$lib/response/item';
-	import type { InitialEditItemFormState } from './schema';
+	import type { EditItemSchema } from './schema';
+	import type { FormErrorsForSchema } from '$lib/helpers/form-errors';
 	import { superForm } from 'sveltekit-superforms';
 
-	type Props = {
-		item: Item;
-		initialFormState: InitialEditItemFormState;
-	};
+	type Props = { item: Item };
 
-	let { item, initialFormState }: Props = $props();
+	let { item }: Props = $props();
 
-	const initialState: InitialEditItemFormState = {
-		id: '',
-		valid: true,
-		posted: false,
-		errors: {},
-		data: { name: '', isInCart: false }
-	};
-	const form = superForm(initialState, {
-		SPA: true,
-		validators: false
-	});
-
-	$effect(() => {
-		form.form.update(() => initialFormState.data);
-	});
+	const form = superForm(
+		{
+			id: '',
+			valid: true,
+			posted: false,
+			errors: {} satisfies FormErrorsForSchema<EditItemSchema>,
+			data: (() => ({ name: item.name, isInCart: item.isInCart }) satisfies EditItemSchema)()
+		},
+		{ SPA: true, validators: false }
+	);
 
 	const { form: formData, errors } = form;
 
