@@ -6,17 +6,15 @@
 	import { Button, buttonVariants, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import {
-		backendErrorsToFormErrors,
-		type BackendFormErrors,
-		type FormErrorsForSchema
-	} from '$lib/helpers/form-errors';
+	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
 	import { loginErrorMessages } from '$lib/messages/login';
-	import { initialLoginForm, type LoginSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
+	import type { User } from '$lib/response/user';
 
-	const form = superForm(initialLoginForm(), {
+	type LoginFormData = Pick<User, 'email' | 'password'>;
+
+	const form = superForm({ email: '', password: '' } satisfies LoginFormData, {
 		SPA: true,
 		validators: false
 	});
@@ -28,7 +26,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'authentication/login');
-		const result = await mutateData<null, BackendFormErrors<LoginSchema>>({
+		const result = await mutateData<null, BackendFormErrors<LoginFormData>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -41,11 +39,8 @@
 			window.localStorage.setItem('isAuthenticated', '1');
 			goto(resolve('/'), { replaceState: true });
 		} else {
-			const formErrors: FormErrorsForSchema<LoginSchema> = backendErrorsToFormErrors(
-				result.error,
-				loginErrorMessages
-			);
-			errors.set(formErrors, { force: true });
+			const formErrors = backendErrorsToFormErrors(result.error, loginErrorMessages);
+			errors.set(formErrors);
 		}
 	}
 </script>
@@ -74,7 +69,6 @@
 		</ul>
 	{/if}
 
-	<!-- Form.ElementField passes { constraints, errors, tainted, value }; we don't use them (FieldErrors reads from context). -->
 	<Form.ElementField {form} name="email">
 		{#snippet children(_)}
 			<Form.Control>

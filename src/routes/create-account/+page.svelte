@@ -6,17 +6,15 @@
 	import { Button, buttonVariants, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import {
-		backendErrorsToFormErrors,
-		type BackendFormErrors,
-		type FormErrorsForSchema
-	} from '$lib/helpers/form-errors';
+	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
 	import { userCreationErrorMessages } from '$lib/messages/user-creation';
-	import { initialCreateAccountForm, type CreateAccountSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
+	import type { User } from '$lib/response/user';
 
-	const form = superForm(initialCreateAccountForm(), {
+	type CreateAccountFormData = Omit<User, 'id'>;
+
+	const form = superForm({ email: '', name: '', password: '' } satisfies CreateAccountFormData, {
 		SPA: true,
 		validators: false
 	});
@@ -28,7 +26,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'users');
-		const result = await mutateData<null, BackendFormErrors<CreateAccountSchema>>({
+		const result = await mutateData<null, BackendFormErrors<CreateAccountFormData>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -39,11 +37,8 @@
 		if (result.error == null) {
 			goto(resolve('/'), { replaceState: true });
 		} else {
-			const formErrors: FormErrorsForSchema<CreateAccountSchema> = backendErrorsToFormErrors(
-				result.error,
-				userCreationErrorMessages
-			);
-			errors.set(formErrors, { force: true });
+			const formErrors = backendErrorsToFormErrors(result.error, userCreationErrorMessages);
+			errors.set(formErrors);
 		}
 	}
 </script>

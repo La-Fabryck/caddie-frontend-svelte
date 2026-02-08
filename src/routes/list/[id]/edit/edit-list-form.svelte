@@ -15,13 +15,10 @@
 	type EditListFormData = Pick<List, 'title'>;
 	type Props = { list: List };
 
-	function getInitialState(title: string): EditListFormData {
-		return { title };
-	}
-
 	let { list }: Props = $props();
 
-	const getInitialFormState = () => getInitialState(list.title);
+	/** Closure over list so Svelte tracks it; superForm calls this to get initial data. */
+	const getInitialFormState = () => ({ title: list.title }) satisfies EditListFormData;
 	const form = superForm(getInitialFormState(), {
 		SPA: true,
 		validators: false

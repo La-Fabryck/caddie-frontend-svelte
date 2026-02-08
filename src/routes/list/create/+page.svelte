@@ -6,15 +6,11 @@
 	import { Button, Input, Spinner } from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import {
-		backendErrorsToFormErrors,
-		type BackendFormErrors,
-		type FormErrorsForSchema
-	} from '$lib/helpers/form-errors';
+	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
 	import { listErrorMessages } from '$lib/messages/list';
-	import { initialCreateListForm, type CreateListSchema } from './schema';
 	import { superForm } from 'sveltekit-superforms';
 
+	type CreateListFormData = { title: string; pseudonym: string };
 	type ListWithSubs = {
 		id: string;
 		title: string;
@@ -23,7 +19,7 @@
 		subscribers: unknown[];
 	};
 
-	const form = superForm(initialCreateListForm(), {
+	const form = superForm({ title: '', pseudonym: '' } satisfies CreateListFormData, {
 		SPA: true,
 		validators: false
 	});
@@ -35,7 +31,7 @@
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'list');
-		const result = await mutateData<ListWithSubs, BackendFormErrors<CreateListSchema>>({
+		const result = await mutateData<ListWithSubs, BackendFormErrors<CreateListFormData>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -46,11 +42,8 @@
 		if (result.error == null && result.data?.id != null) {
 			goto(resolve(`/list/${result.data.id}`), { replaceState: true });
 		} else if (result.error != null) {
-			const formErrors: FormErrorsForSchema<CreateListSchema> = backendErrorsToFormErrors(
-				result.error,
-				listErrorMessages
-			);
-			errors.set(formErrors, { force: true });
+			const formErrors = backendErrorsToFormErrors(result.error, listErrorMessages);
+			errors.set(formErrors);
 		}
 	}
 </script>

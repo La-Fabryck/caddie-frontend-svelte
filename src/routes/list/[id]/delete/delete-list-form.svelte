@@ -10,23 +10,14 @@
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
 	import { listErrorMessages } from '$lib/messages/list';
 	import type { List } from '$lib/response/list';
-	import type { FormErrorsForSchema } from '$lib/helpers/form-errors';
 	import { superForm } from 'sveltekit-superforms';
 
-	type DeleteListSchema = { title: string };
-
+	type DeleteListFormData = Pick<List, 'title'>;
 	let { list }: { list: List } = $props();
 
-	const form = superForm(
-		{
-			id: '',
-			valid: true,
-			posted: false,
-			errors: {} satisfies FormErrorsForSchema<DeleteListSchema>,
-			data: (() => ({ title: list.title }) satisfies DeleteListSchema)()
-		},
-		{ SPA: true, validators: false }
-	);
+	/** Closure over list so Svelte tracks it; superForm calls this to get initial data. */
+	const getInitialFormState = () => ({ title: list.title }) satisfies DeleteListFormData;
+	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
 	const { form: formData, errors } = form;
 
@@ -46,7 +37,7 @@
 			goto(resolve('/'), { replaceState: true });
 		} else if (result.error != null) {
 			const formErrors = backendErrorsToFormErrors(result.error, listErrorMessages);
-			errors.set(formErrors, { force: true });
+			errors.set(formErrors);
 		}
 	}
 </script>

@@ -10,24 +10,17 @@
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
 	import { itemErrorMessages } from '$lib/messages/item';
 	import type { Item } from '$lib/response/item';
-	import type { EditItemSchema } from './schema';
-	import type { FormErrorsForSchema } from '$lib/helpers/form-errors';
 	import { superForm } from 'sveltekit-superforms';
 
+	type EditItemFormData = Pick<Item, 'name' | 'isInCart'>;
 	type Props = { item: Item };
 
 	let { item }: Props = $props();
 
-	const form = superForm(
-		{
-			id: '',
-			valid: true,
-			posted: false,
-			errors: {} satisfies FormErrorsForSchema<EditItemSchema>,
-			data: (() => ({ name: item.name, isInCart: item.isInCart }) satisfies EditItemSchema)()
-		},
-		{ SPA: true, validators: false }
-	);
+	/** Closure over item so Svelte tracks it; superForm calls this to get initial data. */
+	const getInitialFormState = () =>
+		({ name: item.name, isInCart: item.isInCart }) satisfies EditItemFormData;
+	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
 	const { form: formData, errors } = form;
 
@@ -49,7 +42,7 @@
 			goto(resolve(`/list/${item.listId}`), { replaceState: true });
 		} else if (result.error != null) {
 			const formErrors = backendErrorsToFormErrors(result.error, itemErrorMessages);
-			errors.set(formErrors, { force: true });
+			errors.set(formErrors);
 		}
 	}
 </script>
