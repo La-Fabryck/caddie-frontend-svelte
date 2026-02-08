@@ -24,7 +24,7 @@ format:
 	docker compose run --rm frontend npm run format
 
 loc:
-	npx --yes cloc --exclude-dir=node_modules,dist,coverage,.svelte-kit,static --exclude-list-file=package-lock.json .
+	npx --yes cloc --exclude-dir=node_modules,dist,coverage,.svelte-kit,static,build --exclude-list-file=package-lock.json .
 
 # Help target
 help:
