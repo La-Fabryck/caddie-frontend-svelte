@@ -3,8 +3,17 @@
 	import { goto } from '$app/navigation';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import * as Form from '$lib/components/ui/form/index.js';
-	import { Button, Checkbox, Input, Spinner } from '$lib/components/ui';
+	import {
+		Button,
+		Checkbox,
+		FormControl,
+		FormDescription,
+		FormElementField,
+		FormFieldErrors,
+		FormLabel,
+		Input,
+		Spinner
+	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
@@ -55,35 +64,35 @@
 		handleSubmit();
 	}}
 >
-	<Form.ElementField {form} name="name">
+	<FormElementField {form} name="name">
 		{#snippet children(_)}
-			<Form.Control>
+			<FormControl>
 				{#snippet children({ props: controlProps })}
-					<Form.Label>Nom de l'article</Form.Label>
+					<FormLabel>Nom de l'article</FormLabel>
 					<Input {...controlProps} placeholder="🍔 ou 🍫" bind:value={$formData.name} />
 				{/snippet}
-			</Form.Control>
-			<Form.Description>Bravo on a fait une faute 🤦</Form.Description>
-			<Form.FieldErrors />
+			</FormControl>
+			<FormDescription>Bravo on a fait une faute 🤦</FormDescription>
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
-	<Form.ElementField {form} name="isInCart">
+	<FormElementField {form} name="isInCart">
 		{#snippet children(_)}
 			<div class="flex flex-row items-start space-y-0 space-x-3 rounded-md border p-4 shadow">
-				<Form.Control>
+				<FormControl>
 					{#snippet children({ props: controlProps })}
 						<Checkbox bind:checked={$formData.isInCart} {...controlProps} />
 						<div class="space-y-1 leading-none">
-							<Form.Label>Dans le panier 🛒 ?</Form.Label>
-							<Form.Description>As-tu déjà pris l'article ?</Form.Description>
+							<FormLabel>Dans le panier 🛒 ?</FormLabel>
+							<FormDescription>As-tu déjà pris l'article ?</FormDescription>
 						</div>
 					{/snippet}
-				</Form.Control>
+				</FormControl>
 			</div>
-			<Form.FieldErrors />
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
 	<Button class="font-semibold" type="submit" disabled={submitting}>
 		{#if submitting}

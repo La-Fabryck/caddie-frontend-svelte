@@ -3,8 +3,16 @@
 	import { goto } from '$app/navigation';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import * as Form from '$lib/components/ui/form/index.js';
-	import { Button, Input, Spinner } from '$lib/components/ui';
+	import {
+		Button,
+		FormControl,
+		FormDescription,
+		FormElementField,
+		FormFieldErrors,
+		FormLabel,
+		Input,
+		Spinner
+	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
@@ -57,22 +65,22 @@
 		handleSubmit();
 	}}
 >
-	<Form.ElementField {form} name="title">
+	<FormElementField {form} name="title">
 		{#snippet children(_)}
-			<Form.Control>
+			<FormControl>
 				{#snippet children({ props: controlProps })}
-					<Form.Label>Nom de la liste</Form.Label>
+					<FormLabel>Nom de la liste</FormLabel>
 					<Input
 						{...controlProps}
 						placeholder="Le nom de ta liste 🛒🛍️"
 						bind:value={$formData.title}
 					/>
 				{/snippet}
-			</Form.Control>
-			<Form.Description>Tu vas mettre quoi dans tes sacs 🛍️ ?</Form.Description>
-			<Form.FieldErrors />
+			</FormControl>
+			<FormDescription>Tu vas mettre quoi dans tes sacs 🛍️ ?</FormDescription>
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
 	<Button class="font-semibold" type="submit" disabled={submitting}>
 		{#if submitting}

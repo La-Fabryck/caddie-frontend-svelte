@@ -2,8 +2,17 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import * as Form from '$lib/components/ui/form/index.js';
-	import { Button, buttonVariants, Input, Spinner } from '$lib/components/ui';
+	import {
+		Button,
+		buttonVariants,
+		FormControl,
+		FormDescription,
+		FormElementField,
+		FormFieldErrors,
+		FormLabel,
+		Input,
+		Spinner
+	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
@@ -67,11 +76,11 @@
 		</ul>
 	{/if}
 
-	<Form.ElementField {form} name="email">
+	<FormElementField {form} name="email">
 		{#snippet children(_)}
-			<Form.Control>
+			<FormControl>
 				{#snippet children({ props: controlProps })}
-					<Form.Label>Email</Form.Label>
+					<FormLabel>Email</FormLabel>
 					<Input
 						{...controlProps}
 						type="email"
@@ -79,34 +88,34 @@
 						bind:value={$formData.email}
 					/>
 				{/snippet}
-			</Form.Control>
-			<Form.Description>Rentre ton email.</Form.Description>
-			<Form.FieldErrors />
+			</FormControl>
+			<FormDescription>Rentre ton email.</FormDescription>
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
-	<Form.ElementField {form} name="name">
+	<FormElementField {form} name="name">
 		{#snippet children(_)}
-			<Form.Control>
+			<FormControl>
 				{#snippet children({ props: controlProps })}
-					<Form.Label>Ton surnom</Form.Label>
+					<FormLabel>Ton surnom</FormLabel>
 					<Input
 						{...controlProps}
 						placeholder="Ton surnom par défaut pour les listes."
 						bind:value={$formData.name}
 					/>
 				{/snippet}
-			</Form.Control>
-			<Form.Description>Ton surnom de 2 lettres minimum, on est sérieux ici.</Form.Description>
-			<Form.FieldErrors />
+			</FormControl>
+			<FormDescription>Ton surnom de 2 lettres minimum, on est sérieux ici.</FormDescription>
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
-	<Form.ElementField {form} name="password">
+	<FormElementField {form} name="password">
 		{#snippet children(_)}
-			<Form.Control>
+			<FormControl>
 				{#snippet children({ props: controlProps })}
-					<Form.Label>Mot de Passe</Form.Label>
+					<FormLabel>Mot de Passe</FormLabel>
 					<Input
 						{...controlProps}
 						type="password"
@@ -114,11 +123,11 @@
 						bind:value={$formData.password}
 					/>
 				{/snippet}
-			</Form.Control>
-			<Form.Description>Ton mot de passe personnel.</Form.Description>
-			<Form.FieldErrors />
+			</FormControl>
+			<FormDescription>Ton mot de passe personnel.</FormDescription>
+			<FormFieldErrors />
 		{/snippet}
-	</Form.ElementField>
+	</FormElementField>
 
 	<Button class="font-semibold" type="submit" disabled={submitting}>
 		{#if submitting}
