@@ -8,5 +8,6 @@ export {
 export { Checkbox } from './checkbox';
 export * from './form';
 export { Input } from './input';
+export * from './navigation-menu';
 export * from './spinner';
 export { ToggleGroup, ToggleGroupItem } from './toggle-group';
