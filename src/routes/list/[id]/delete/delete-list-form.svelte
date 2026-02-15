@@ -75,7 +75,7 @@
 	</FormElementField>
 
 	<Button
-		class="text-destructive-foreground font-semibold"
+		class="font-semibold text-destructive-foreground"
 		type="submit"
 		variant="destructive"
 		disabled={submitting}

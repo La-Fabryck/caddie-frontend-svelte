@@ -45,7 +45,7 @@
 	{#if items.length === 0}
 		<p>Pas d'articles trouvés</p>
 	{:else}
-		<div class="bg-crust relative flex flex-col rounded-xl">
+		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
 				{#each items as item (item.id)}
 					<SelectShoppingItem {item} {invalidateItems} />
@@ -57,11 +57,11 @@
 	{#if items.length === 0}
 		<p>Pas d'articles trouvés</p>
 	{:else}
-		<div class="bg-crust relative flex flex-col rounded-xl">
+		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
 				{#each items as item (item.id)}
 					<li
-						class="hover:bg-surface1 flex w-full list-none items-center rounded-lg p-0 transition-all focus:bg-slate-100 active:bg-slate-100"
+						class="flex w-full list-none items-center rounded-lg p-0 transition-all hover:bg-surface1 focus:bg-slate-100 active:bg-slate-100"
 					>
 						<a
 							class="flex flex-1 cursor-pointer items-center px-3 py-2"
@@ -79,7 +79,7 @@
 	<Button
 		variant="destructive"
 		size="lg"
-		class="text-destructive-foreground mb-3 font-semibold"
+		class="mb-3 font-semibold text-destructive-foreground"
 		disabled={itemsToDelete.length === 0}
 		onclick={handleDeleteSelected}
 	>
@@ -89,7 +89,7 @@
 	{#if items.length === 0}
 		<p>Pas d'articles trouvés</p>
 	{:else}
-		<div class="bg-crust relative flex flex-col rounded-xl">
+		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
 				{#each items as item (item.id)}
 					<DeleteShoppingItem

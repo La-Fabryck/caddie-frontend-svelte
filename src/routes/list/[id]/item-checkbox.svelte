@@ -12,7 +12,7 @@
 
 <!-- TODO: move to shadcn components -->
 <li
-	class="hover:bg-surface1 flex w-full list-none items-center rounded-lg p-0 transition-all focus:bg-slate-100 active:bg-slate-100"
+	class="flex w-full list-none items-center rounded-lg p-0 transition-all hover:bg-surface1 focus:bg-slate-100 active:bg-slate-100"
 >
 	<label
 		for={item.id}
@@ -30,7 +30,7 @@
 					onchange={(e) => onChange(e.currentTarget.checked)}
 				/>
 				<svg
-					class="stroke-crust pointer-events-none absolute ml-1 hidden h-4 w-3 outline-hidden peer-checked:block"
+					class="pointer-events-none absolute ml-1 hidden h-4 w-3 stroke-crust outline-hidden peer-checked:block"
 					xmlns="http://www.w3.org/2000/svg"
 					viewBox="0 0 24 24"
 					fill="none"

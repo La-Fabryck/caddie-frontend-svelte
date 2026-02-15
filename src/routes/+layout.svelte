@@ -17,41 +17,58 @@
 	<link rel="icon" href={favicon} />
 </svelte:head>
 
-<div
-	class="preview flex w-full justify-center p-2 data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start"
->
-	<div class="container-wrapper 3xl:fixed:px-0 px-6">
-		<div class="3xl:fixed:container h-(--header-height) gap-2 **:data-[slot=separator]:h-4!">
-			<NavigationMenuRoot>
-				<NavigationMenuList class="flex flex-row items-center justify-center">
-					<NavigationMenuItem>
-						<NavigationMenuLink>
-							{#snippet child()}
-								<a href={resolve('/')} class={navigationMenuTriggerStyle()}>Home</a>
-							{/snippet}
-						</NavigationMenuLink>
-					</NavigationMenuItem>
+<header class="flex justify-end bg-crust">
+	<nav
+		class="preview flex w-full justify-center p-2 data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start"
+	>
+		<div class="container-wrapper 3xl:fixed:px-0 px-6">
+			<div class="3xl:fixed:container h-(--header-height) gap-2 **:data-[slot=separator]:h-4!">
+				<NavigationMenuRoot>
+					<NavigationMenuList class="flex flex-row items-center justify-center">
+						<NavigationMenuItem>
+							<NavigationMenuLink>
+								{#snippet child()}
+									<a
+										href={resolve('/')}
+										class={navigationMenuTriggerStyle({
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+										})}>Home</a
+									>
+								{/snippet}
+							</NavigationMenuLink>
+						</NavigationMenuItem>
 
-					<NavigationMenuItem>
-						<NavigationMenuLink>
-							{#snippet child()}
-								<a href={resolve('/login')} class={navigationMenuTriggerStyle()}>Login</a>
-							{/snippet}
-						</NavigationMenuLink>
-					</NavigationMenuItem>
+						<NavigationMenuItem>
+							<NavigationMenuLink>
+								{#snippet child()}
+									<a
+										href={resolve('/login')}
+										class={navigationMenuTriggerStyle({
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+										})}>Login</a
+									>
+								{/snippet}
+							</NavigationMenuLink>
+						</NavigationMenuItem>
 
-					<NavigationMenuItem>
-						<NavigationMenuLink>
-							{#snippet child()}
-								<a href="/404" class={navigationMenuTriggerStyle()}>404</a>
-							{/snippet}
-						</NavigationMenuLink>
-					</NavigationMenuItem>
-				</NavigationMenuList>
-			</NavigationMenuRoot>
+						<NavigationMenuItem>
+							<NavigationMenuLink>
+								{#snippet child()}
+									<a
+										href="/404"
+										class={navigationMenuTriggerStyle({
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+										})}>404</a
+									>
+								{/snippet}
+							</NavigationMenuLink>
+						</NavigationMenuItem>
+					</NavigationMenuList>
+				</NavigationMenuRoot>
+			</div>
 		</div>
-	</div>
-</div>
+	</nav>
+</header>
 
 <main>
 	<div class="py-5">

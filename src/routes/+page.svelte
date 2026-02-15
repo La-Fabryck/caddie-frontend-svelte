@@ -29,7 +29,7 @@
 	{:else}
 		<ul>
 			{#each listData.data as list (list.id)}
-				<li class="bg-surface0 hover:bg-surface1 my-2 flex justify-between gap-x-6 p-5">
+				<li class="my-2 flex justify-between gap-x-6 bg-surface0 p-5 hover:bg-surface1">
 					<a href={resolve(`/list/${list.id}`)} class="flex min-w-0 flex-auto gap-x-4">
 						<div class="min-w-0 flex-auto">
 							<p class="text-lg font-bold">{list.title}</p>
@@ -44,8 +44,8 @@
 								<div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
 									<p class="text-xs/5">En cours</p>
 								</div>
-								<div class="bg-green rounded-full p-1">
-									<div class="bg-green size-1.5 rounded-full"></div>
+								<div class="rounded-full bg-green p-1">
+									<div class="size-1.5 rounded-full bg-green"></div>
 								</div>
 							</div>
 							<div class="mt-1 hidden shrink-0 sm:flex sm:flex-col sm:items-end">
