@@ -1,5 +1,8 @@
 node_modules
 
+# Prod Docker build copies docker/app/prod/.dockerignore here; don’t commit it
+/.dockerignore
+
 # Output
 .output
 .vercel

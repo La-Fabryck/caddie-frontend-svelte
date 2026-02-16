@@ -14,17 +14,26 @@ export async function handle({
 }
 
 const backend_url = process.env['VITE_BACKEND_URL']!;
-const frontend_url = `${process.env['VITE_FRONTEND_URL']}${process.env['VITE_API_BASE_URL']}}`;
+const frontend_url = `${process.env['VITE_FRONTEND_URL']}${process.env['VITE_API_BASE_URL']}`;
 
 export async function handleFetch({
+	event,
 	request,
 	fetch
 }: Parameters<HandleFetch>[0]): Promise<ReturnType<HandleFetch>> {
-	console.log(request.headers);
 	if (request.url.includes('/api/')) {
-		// clone the original request, but change the URL
-		request = new Request(request.url.replace(frontend_url, backend_url), request);
-	}
+		const headers = new Headers(request.headers);
 
+		const cookie = event.request.headers.get('cookie');
+		if (cookie) {
+			headers.set('cookie', cookie);
+		}
+
+		request = new Request(request.url.replace(frontend_url, backend_url), {
+			method: request.method,
+			headers,
+			body: request.body
+		});
+	}
 	return fetch(request);
 }

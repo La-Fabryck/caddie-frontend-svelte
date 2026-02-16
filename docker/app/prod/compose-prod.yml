@@ -1,0 +1,26 @@
+services:
+  frontend:
+    build:
+      context: ../../..
+      dockerfile: docker/app/prod/Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env
+    networks:
+      - caddie_network
+
+  nginx:
+    build:
+      context: ../../..
+      dockerfile: docker/app/prod/nginx.Dockerfile
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    depends_on:
+      - frontend
+    networks:
+      - caddie_network
+
+networks:
+  caddie_network:
+    external: true
