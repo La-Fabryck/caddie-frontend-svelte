@@ -13,8 +13,8 @@
 
 	let { item, invalidateItems }: Props = $props();
 
-	// Writable derived: from item.isInCart, overridable on PATCH success; resyncs when item updates (e.g. after invalidate)
-	// Question : Wouldn't this be a problem ? Do we need to reload every time ? Planning on moving to SSE anyway
+	// Derived from server state, but assignable for optimistic UI (see Svelte “Overriding derived values”).
+	// handleChange assigns before the debounced PATCH so the checkbox updates immediately.
 	let isInCart = $derived(item.isInCart);
 
 	const debouncedPatch = debounce(async (checked: boolean, currentItem: Item) => {
@@ -27,12 +27,12 @@
 			body: { isInCart: checked }
 		});
 		if (result.data != null) {
-			isInCart = checked;
 			invalidateItems();
 		}
 	});
 
 	function handleChange(checked: boolean) {
+		isInCart = checked;
 		debouncedPatch(checked, item);
 	}
 </script>
