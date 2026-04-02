@@ -1,0 +1,14 @@
+---
+description: Do not edit vendored shadcn-svelte UI components; request installs instead
+alwaysApply: true
+---
+
+# shadcn-svelte UI components (`src/lib/components/ui`)
+
+- **Do not modify** files under [`src/lib/components/ui/`](src/lib/components/ui/) (including [`index.ts`](src/lib/components/ui/index.ts), primitives, and styles inside that tree). Treat this directory as **generated / upstream shadcn-svelte** output.
+
+- If the project needs a **new** component from the registry (Button variant, Dialog, Select, etc.), **do not hand-roll or paste** it: **ask the maintainer** to add it with the **shadcn-svelte CLI** (e.g. `npx shadcn-svelte@latest add <component>`), then use the installed exports from `$lib/components/ui`.
+
+- **Allowed:** importing and composing those components elsewhere (e.g. routes, feature components), passing `class`, snippets, and props as documented.
+
+- **Avoid:** editing checkbox/button/input source, changing `cn()` defaults in primitives, or rewriting `index.ts` barrel exports unless the user explicitly asks for a one-off exception.
