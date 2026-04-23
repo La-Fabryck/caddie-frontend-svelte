@@ -21,14 +21,18 @@
 	import type { Item } from '$lib/response/item';
 	import { superForm } from 'sveltekit-superforms';
 
-	type EditItemFormData = Pick<Item, 'name' | 'isInCart'>;
+	type EditItemFormData = Pick<Item, 'name' | 'isInCart' | 'quantity'>;
 	type Props = { item: Item };
 
 	let { item }: Props = $props();
 
 	/** Closure over item so Svelte tracks it; superForm calls this to get initial data. */
 	const getInitialFormState = () =>
-		({ name: item.name, isInCart: item.isInCart }) satisfies EditItemFormData;
+		({
+			name: item.name,
+			quantity: item.quantity,
+			isInCart: item.isInCart
+		}) satisfies EditItemFormData;
 	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
 	const { form: formData, errors } = form;
@@ -73,6 +77,26 @@
 				{/snippet}
 			</FormControl>
 			<FormDescription>Bravo on a fait une faute 🤦</FormDescription>
+			<FormFieldErrors />
+		{/snippet}
+	</FormElementField>
+
+	<FormElementField {form} name="quantity">
+		{#snippet children(_)}
+			<FormControl>
+				{#snippet children({ props: controlProps })}
+					<FormLabel>Quantité</FormLabel>
+					<Input
+						{...controlProps}
+						type="number"
+						min={1}
+						step={1}
+						placeholder="1"
+						bind:value={$formData.quantity}
+					/>
+				{/snippet}
+			</FormControl>
+			<FormDescription>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription>
 			<FormFieldErrors />
 		{/snippet}
 	</FormElementField>

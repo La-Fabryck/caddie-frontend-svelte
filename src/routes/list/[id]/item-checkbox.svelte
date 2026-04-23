@@ -34,7 +34,12 @@
 				onCheckedChange={handleCheckedChange}
 				aria-labelledby="label-{item.id}"
 			/>
-			<span id="label-{item.id}" class="ml-2 cursor-pointer text-sm">{item.name}</span>
+			<span id="label-{item.id}" class="ml-2 cursor-pointer text-sm">
+				{item.name}
+				{#if item.quantity > 1}
+					<span class="text-subtext0 font-semibold"> x{item.quantity}</span>
+				{/if}
+			</span>
 		</div>
 	</label>
 </li>

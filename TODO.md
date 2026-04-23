@@ -18,9 +18,9 @@
   - [x] Remove
   - Sorting :
     - [x] Alphabetical order
-    - Fix case-insensitive sort behavior.
+    - [x] Fix case-insensitive sort behavior.
   - Add item type.
-  - Add quantity support.
+  - [x] Add quantity support.
 - Subscription
   - Create share/subscription link for a list.
   - Allow users to subscribe/join a shared list.

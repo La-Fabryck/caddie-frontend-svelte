@@ -68,7 +68,12 @@
 							href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
 						>
 							<SquareArrowOutUpRight class="text-pink" />
-							<span class="ml-2 text-sm">{item.name}</span>
+							<span class="ml-2 text-sm">
+								{item.name}
+								{#if item.quantity > 1}
+									<span class="text-subtext0 font-semibold"> x{item.quantity}</span>
+								{/if}
+							</span>
 						</a>
 					</li>
 				{/each}
