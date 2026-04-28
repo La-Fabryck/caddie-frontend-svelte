@@ -14,6 +14,7 @@
 		Input,
 		Spinner
 	} from '$lib/components/ui';
+	import ItemTypeCombobox from '../../item-type-combobox.svelte';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
@@ -21,7 +22,7 @@
 	import type { Item } from '$lib/response/item';
 	import { superForm } from 'sveltekit-superforms';
 
-	type EditItemFormData = Pick<Item, 'name' | 'isInCart' | 'quantity'>;
+	type EditItemFormData = Pick<Item, 'name' | 'isInCart' | 'quantity' | 'itemTypeId'>;
 	type Props = { item: Item };
 
 	let { item }: Props = $props();
@@ -31,7 +32,8 @@
 		({
 			name: item.name,
 			quantity: item.quantity,
-			isInCart: item.isInCart
+			isInCart: item.isInCart,
+			itemTypeId: item.itemTypeId
 		}) satisfies EditItemFormData;
 	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
@@ -97,6 +99,19 @@
 				{/snippet}
 			</FormControl>
 			<FormDescription>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription>
+			<FormFieldErrors />
+		{/snippet}
+	</FormElementField>
+
+	<FormElementField {form} name="itemTypeId">
+		{#snippet children(_)}
+			<FormControl>
+				{#snippet children(_)}
+					<FormLabel>Type</FormLabel>
+					<ItemTypeCombobox bind:selectedItemTypeId={$formData.itemTypeId} />
+				{/snippet}
+			</FormControl>
+			<FormDescription>Optionnel: choisis ou cree un type d'article.</FormDescription>
 			<FormFieldErrors />
 		{/snippet}
 	</FormElementField>

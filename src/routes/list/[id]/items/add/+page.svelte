@@ -13,6 +13,7 @@
 		Input,
 		Spinner
 	} from '$lib/components/ui';
+	import ItemTypeCombobox from '../item-type-combobox.svelte';
 	import { mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
@@ -21,13 +22,14 @@
 	import { superForm } from 'sveltekit-superforms';
 	import type { PageProps } from './$types';
 
-	type CreateItemFormData = Pick<Item, 'name'> & Partial<Pick<Item, 'quantity'>>;
+	type CreateItemFormData = Pick<Item, 'name'> &
+		Partial<Pick<Item, 'quantity'>> & { itemTypeId?: string | null };
 	let { data, params }: PageProps = $props();
 
 	const listId = $derived(params.id);
 
 	const form = superForm<CreateItemFormData>(
-		{ name: '' },
+		{ name: '', itemTypeId: null },
 		{
 			SPA: true,
 			validators: false
@@ -106,6 +108,19 @@
 						{/snippet}
 					</FormControl>
 					<FormDescription>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription>
+					<FormFieldErrors />
+				{/snippet}
+			</FormElementField>
+
+			<FormElementField {form} name="itemTypeId">
+				{#snippet children(_)}
+					<FormControl>
+						{#snippet children(_)}
+							<FormLabel>Type</FormLabel>
+							<ItemTypeCombobox bind:selectedItemTypeId={$formData.itemTypeId} />
+						{/snippet}
+					</FormControl>
+					<FormDescription>Optionnel: choisis ou cree un type d'article.</FormDescription>
 					<FormFieldErrors />
 				{/snippet}
 			</FormElementField>

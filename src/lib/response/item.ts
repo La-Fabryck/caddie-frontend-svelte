@@ -4,4 +4,5 @@ export type Item = {
 	name: string;
 	quantity: number;
 	isInCart: boolean;
+	itemTypeId: string | null;
 };
