@@ -1,0 +1,23 @@
+---
+description: Prefer native JS/TS/Svelte built-ins over custom reimplementations when supported
+globs: **/*.{js,ts,svelte}
+alwaysApply: false
+---
+
+# Prefer Native Built-ins
+
+- Prefer native platform features (e.g. `Object.groupBy`, `Object.entries`, `Object.fromEntries`, `Array.prototype.map/filter/reduce/flatMap/find/toSorted`, `Map`, `Set`, `URL`, `Intl`) when they are supported by this project's target runtimes.
+- Prefer native `Object.*` and `Array.*`/`Array.prototype.*` utilities over manual loops for transformations, grouping, filtering, sorting, and lookups.
+- Do not re-implement standard library behavior unless there is a demonstrated compatibility, performance, or readability reason.
+- If compatibility is uncertain, verify project targets first and then choose native by default.
+- During review/refactor, simplify custom utility code to native equivalents when behavior stays the same.
+
+## Examples
+
+```ts
+// Avoid manual grouping loops when native groupBy is available.
+const grouped = Object.groupBy(items, (item) => item.type ?? 'Autre');
+
+// Use immutable native sorting for derived views.
+const sorted = items.toSorted((a, b) => a.name.localeCompare(b.name));
+```
