@@ -16,7 +16,7 @@
 - Items
   - [x] Edit
   - [x] Remove
-  - Sorting :
+  - [x] Sorting :
     - [x] Alphabetical order
     - [x] Fix case-insensitive sort behavior.
   - Add item type.
