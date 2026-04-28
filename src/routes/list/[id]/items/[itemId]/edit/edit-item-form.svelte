@@ -111,7 +111,7 @@
 					<ItemTypeCombobox bind:selectedItemTypeId={$formData.itemTypeId} />
 				{/snippet}
 			</FormControl>
-			<FormDescription>Optionnel: choisis ou cree un type d'article.</FormDescription>
+			<FormDescription>Optionnel: choisis ou crée un type d'article.</FormDescription>
 			<FormFieldErrors />
 		{/snippet}
 	</FormElementField>

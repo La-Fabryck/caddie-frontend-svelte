@@ -7,16 +7,31 @@
 	import DeleteShoppingItem, { type ItemToDeleteTuple } from './delete-shopping-item.svelte';
 
 	export type Action = 'selection' | 'edition' | 'deletion';
+	type SortMode = 'default' | 'type';
+	type ItemSection = {
+		label: string;
+		items: Item[];
+	};
 
 	type Props = {
 		action: Action;
 		listId: string;
 		items: Item[];
+		sortMode?: SortMode;
+		sections?: ItemSection[];
 		invalidateItems: () => void;
 		onActionChange: (value: Action) => void;
 	};
 
-	let { action, listId, items = [], invalidateItems, onActionChange }: Props = $props();
+	let {
+		action,
+		listId,
+		items = [],
+		sortMode = 'default',
+		sections = [],
+		invalidateItems,
+		onActionChange
+	}: Props = $props();
 
 	let itemsToDelete = $state<ItemToDeleteTuple[]>([]);
 
@@ -32,6 +47,8 @@
 		onActionChange('selection');
 		itemsToDelete = [];
 	}
+
+	const hasSections = $derived(sortMode === 'type' && sections.length > 0);
 </script>
 
 {#if action === 'selection'}
@@ -47,9 +64,22 @@
 	{:else}
 		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
-				{#each items as item (item.id)}
-					<SelectShoppingItem {item} {invalidateItems} />
-				{/each}
+				{#if hasSections}
+					{#each sections as section (section.label)}
+						<li
+							class="px-2 pt-3 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase"
+						>
+							{section.label}
+						</li>
+						{#each section.items as item (item.id)}
+							<SelectShoppingItem {item} {invalidateItems} />
+						{/each}
+					{/each}
+				{:else}
+					{#each items as item (item.id)}
+						<SelectShoppingItem {item} {invalidateItems} />
+					{/each}
+				{/if}
 			</ul>
 		</div>
 	{/if}
@@ -59,24 +89,52 @@
 	{:else}
 		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
-				{#each items as item (item.id)}
-					<li
-						class="flex w-full list-none items-center rounded-lg p-0 transition-all hover:bg-surface1 focus:bg-slate-100 active:bg-slate-100"
-					>
-						<a
-							class="flex flex-1 cursor-pointer items-center px-3 py-2"
-							href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
+				{#if hasSections}
+					{#each sections as section (section.label)}
+						<li
+							class="px-2 pt-3 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase"
 						>
-							<SquareArrowOutUpRight class="text-pink" />
-							<span class="ml-2 text-sm">
-								{item.name}
-								{#if item.quantity > 1}
-									<span class="text-subtext0 font-semibold"> x{item.quantity}</span>
-								{/if}
-							</span>
-						</a>
-					</li>
-				{/each}
+							{section.label}
+						</li>
+						{#each section.items as item (item.id)}
+							<li
+								class="flex w-full list-none items-center rounded-lg p-0 transition-all hover:bg-surface1 focus:bg-slate-100 active:bg-slate-100"
+							>
+								<a
+									class="flex flex-1 cursor-pointer items-center px-3 py-2"
+									href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
+								>
+									<SquareArrowOutUpRight class="text-pink" />
+									<span class="ml-2 text-sm">
+										{item.name}
+										{#if item.quantity > 1}
+											<span class="text-subtext0 font-semibold"> x{item.quantity}</span>
+										{/if}
+									</span>
+								</a>
+							</li>
+						{/each}
+					{/each}
+				{:else}
+					{#each items as item (item.id)}
+						<li
+							class="flex w-full list-none items-center rounded-lg p-0 transition-all hover:bg-surface1 focus:bg-slate-100 active:bg-slate-100"
+						>
+							<a
+								class="flex flex-1 cursor-pointer items-center px-3 py-2"
+								href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
+							>
+								<SquareArrowOutUpRight class="text-pink" />
+								<span class="ml-2 text-sm">
+									{item.name}
+									{#if item.quantity > 1}
+										<span class="text-subtext0 font-semibold"> x{item.quantity}</span>
+									{/if}
+								</span>
+							</a>
+						</li>
+					{/each}
+				{/if}
 			</ul>
 		</div>
 	{/if}
@@ -96,13 +154,30 @@
 	{:else}
 		<div class="relative flex flex-col rounded-xl bg-crust">
 			<ul class="flex min-w-60 list-none flex-col gap-1 p-2">
-				{#each items as item (item.id)}
-					<DeleteShoppingItem
-						{item}
-						{itemsToDelete}
-						onItemsToDeleteChange={(v) => (itemsToDelete = v)}
-					/>
-				{/each}
+				{#if hasSections}
+					{#each sections as section (section.label)}
+						<li
+							class="px-2 pt-3 pb-1 text-xs font-semibold tracking-wide text-muted-foreground uppercase"
+						>
+							{section.label}
+						</li>
+						{#each section.items as item (item.id)}
+							<DeleteShoppingItem
+								{item}
+								{itemsToDelete}
+								onItemsToDeleteChange={(v) => (itemsToDelete = v)}
+							/>
+						{/each}
+					{/each}
+				{:else}
+					{#each items as item (item.id)}
+						<DeleteShoppingItem
+							{item}
+							{itemsToDelete}
+							onItemsToDeleteChange={(v) => (itemsToDelete = v)}
+						/>
+					{/each}
+				{/if}
 			</ul>
 		</div>
 	{/if}
