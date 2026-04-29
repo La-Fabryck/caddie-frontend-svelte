@@ -10,16 +10,15 @@
   - [x] Edit
   - [x] Remove
   - Add list status flag (`active` / `inactive`).
-  - Fix stale data after creating a list (invalidate or refresh the right data source).
-  - Sorting
-    - [x] Sort by `updatedAt`
+  - [x] Sort by `updatedAt`
 - Items
   - [x] Edit
   - [x] Remove
   - [x] Sorting :
     - [x] Alphabetical order
     - [x] Fix case-insensitive sort behavior.
-  - Add item type.
+    - [x] By Item type
+  - [x] Add item type.
   - [x] Add quantity support.
 - Subscription
   - Create share/subscription link for a list.
