@@ -40,7 +40,10 @@ export default defineConfig(
 					varsIgnorePattern: '^_',
 					ignoreRestSiblings: true
 				}
-			]
+			],
+
+			// Prefer structured logging in production; allow console.warn / console.error for real issues.
+			'no-console': ['warn']
 		}
 	},
 	{
