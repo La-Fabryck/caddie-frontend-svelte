@@ -19,6 +19,18 @@ type MutateConfig = GetConfig & {
 	body: unknown;
 };
 
+export const UNAUTHORIZED_STATUS_CODE = 401;
+export const BAD_REQUEST_STATUS_CODE = 400;
+
+const REFRESH_ENDPOINT_PATH = '/api/authentication/refresh';
+const NON_REFRESHABLE_PATHS = new Set([
+	'/api/authentication/login',
+	'/api/authentication/refresh',
+	'/api/users'
+]);
+
+let refreshPromise: Promise<void> | null = null;
+
 /**
  * Builds a Request with JSON Accept and optional body.
  * Mirrors prepareRequest from caddie-frontend-preact/src/hooks/use-fetch.ts (no cache/signals).
@@ -38,6 +50,58 @@ function prepareRequest(url: URL | string, method: HTTPMethods = 'GET', body?: u
 		headers,
 		body: body != null ? JSON.stringify(body) : null
 	});
+}
+
+function isBrowserRuntime(): boolean {
+	return typeof window !== 'undefined';
+}
+
+function shouldAttemptRefresh(request: Request, status: number): boolean {
+	// Keep single-flight refresh browser-only: module-level shared state is safe for one client runtime,
+	// but would be unsafe for SSR where requests from different users can run concurrently on the server.
+	if (!isBrowserRuntime() || status !== 401) {
+		return false;
+	}
+
+	const requestPath = new URL(request.url, window.location.origin).pathname;
+	return requestPath.startsWith('/api/') && !NON_REFRESHABLE_PATHS.has(requestPath);
+}
+
+async function runRefresh(fetchInstance: typeof global.fetch): Promise<void> {
+	const refreshResponse = await fetchInstance(
+		new Request(REFRESH_ENDPOINT_PATH, { method: 'POST' })
+	);
+
+	if (!refreshResponse.ok) {
+		throw new Error('REFRESH_FAILED');
+	}
+}
+
+async function requestWithSingleFlightRefresh(
+	fetchInstance: typeof global.fetch,
+	request: Request
+): Promise<Response> {
+	const response = await fetchInstance(request.clone());
+
+	if (!shouldAttemptRefresh(request, response.status)) {
+		return response;
+	}
+
+	if (refreshPromise == null) {
+		refreshPromise = runRefresh(fetchInstance).finally(() => {
+			refreshPromise = null;
+		});
+	}
+
+	try {
+		await refreshPromise;
+	} catch {
+		return response;
+	}
+
+	// Retry only once after successful refresh.
+	const retriedResponse = await fetchInstance(request.clone());
+	return retriedResponse;
 }
 
 /**
@@ -67,7 +131,7 @@ export async function fetchData<TResponse = unknown, TError = unknown>({
 	fetch: fetchInstance,
 	url
 }: GetConfig) {
-	const response = await fetchInstance(prepareRequest(url));
+	const response = await requestWithSingleFlightRefresh(fetchInstance, prepareRequest(url));
 
 	if (response.ok) {
 		return {
@@ -88,7 +152,10 @@ export async function mutateData<TResponse = unknown, TError = unknown>({
 	method,
 	body
 }: MutateConfig) {
-	const response = await fetchInstance(prepareRequest(url, method, body));
+	const response = await requestWithSingleFlightRefresh(
+		fetchInstance,
+		prepareRequest(url, method, body)
+	);
 
 	if (response.ok) {
 		return {
@@ -112,7 +179,10 @@ export async function deleteData<TResponse = unknown, TError = unknown>({
 	fetch: fetchInstance,
 	url
 }: GetConfig) {
-	const response = await fetchInstance(prepareRequest(url, 'DELETE'));
+	const response = await requestWithSingleFlightRefresh(
+		fetchInstance,
+		prepareRequest(url, 'DELETE')
+	);
 
 	if (response.ok) {
 		return {
