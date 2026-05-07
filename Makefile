@@ -1,7 +1,13 @@
-.PHONY: update install dedupe lint format loc help
+.PHONY: update update-doctor install dedupe lint format loc help
 
 update:
 	docker compose run --rm frontend npx --yes npm-check-updates -u -i --format group
+
+# Like update, but npm-check-updates doctor mode: upgrades that fail lint or e2e are reverted (Compose starts postgres for e2e).
+update-doctor:
+	@echo "Doctor upgrade (lint gate)..."
+	docker compose run --rm frontend npx --yes npm-check-updates --doctor -u -i --doctorTest "npm run lint" --format group
+	@echo "Update complete!"
 
 # Install dependencies
 install:
@@ -29,10 +35,8 @@ loc:
 # Help target
 help:
 	@echo "Available targets:"
-	@echo "  update   - Update all dependencies except fastify"
-	@echo "  deps     - Alias for update"
-	@echo "  check    - Check for available updates (dry run)"
-	@echo "  versions - Show current Fastify package versions"
+	@echo "  update         - Update dependencies"
+	@echo "  update-doctor  - Update dependencies with lint gate"
 	@echo "  install  - Install dependencies"
 	@echo "  lint     - Invoke lint command"
 	@echo "  format   - Invoke format command"
