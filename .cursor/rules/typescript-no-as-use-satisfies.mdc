@@ -1,0 +1,57 @@
+---
+description: Prefer satisfies over type assertions; no unsafe `as` patterns
+globs: "**/*.{ts,svelte}"
+alwaysApply: false
+---
+
+# SvelteKit TypeScript: avoid `as`, prefer `satisfies`
+
+## Goals for this codebase
+
+- Do not paper over type errors with assertions. Fix the types or narrow the value instead.
+- In Svelte components (`<script lang="ts">`) and helpers, prefer **`satisfies`** on object literals so field keys stay checked without widening inferred types.
+- Keep form payload typing aligned with project patterns (`superForm`, API helpers, typed response models) without using unsafe casts.
+
+## Avoid
+
+- `as any`, `as unknown`, or **`as unknown as T`** (double assertion).
+- Assertions to silence errors (`as Foo` on values you are not sure are `Foo`).
+- Wide assertions on API/JSON payloads without validation; map and narrow values instead.
+
+## Prefer in this project
+
+- **`satisfies SomeType`** on object literals passed to `superForm`, fetch payload builders, and config objects.
+- **Generics** and **type parameters** so callers stay correctly typed without casting.
+- **Type guards** (`function isFoo(x): x is Foo`) and **narrowing** (`if`, `switch`, discriminated unions).
+- **`as const`** only when you need literal/tuple inference; it is not a substitute for `satisfies` on object shapes.
+- In `catch` blocks, type the variable as `unknown` and narrow with `instanceof Error` (or a specific error class) instead of using `as`.
+
+## Examples (Svelte-first)
+
+```svelte
+<script lang="ts">
+	import { superForm } from 'sveltekit-superforms';
+	import type { User } from '$lib/response/user';
+
+	type CreateAccountFormData = Omit<User, 'id'>;
+
+	// Bad: assertion hides mistakes and can widen types
+	const formBad = superForm({ email: '', name: '', password: '' } as CreateAccountFormData);
+
+	// Good: matches existing project style
+	const form = superForm({ email: '', name: '', password: '' } satisfies CreateAccountFormData, {
+		SPA: true,
+		validators: false
+	});
+</script>
+```
+
+```ts
+// Bad
+const payload = response as User;
+
+// Good
+const payload = mapResponseToUser(response);
+```
+
+If the compiler forces an `as` to compile, treat that as a signal to improve types or add a guard. Do not stack assertions.
