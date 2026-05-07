@@ -1,0 +1,29 @@
+---
+description: Prefer positive conditions; allow negative early exits
+alwaysApply: true
+---
+
+# Condition Reading Flow
+
+- Prefer positive conditions in main control flow to keep code easy to read left-to-right.
+- Avoid negative conditions (`!foo`, `!==`, `if (!x) { ... }` as the main branch) unless the branch is an early return or error throw.
+- Negative null/undefined checks are also allowed (for example `if (!value)`, `if (value == null)`, `if (value === null)`), especially as guards.
+- Negative guard clauses are encouraged when they exit quickly (e.g. `return`, `continue`, `break`, `throw`) and keep the main path unindented.
+- For non-early branches, prefer rewriting to positive form.
+
+Examples:
+
+```ts
+// Preferred (negative condition used only as an early return)
+if (!shouldAttemptRefresh(request, response.status)) {
+  return response;
+}
+await refreshAndRetry(request);
+
+// Avoid (negative condition as main branch)
+if (!isReady) {
+  process();
+} else {
+  skip();
+}
+```

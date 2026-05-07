@@ -25,12 +25,11 @@ export function backendErrorsToFormErrors<T extends Record<string, unknown>>(
 
 	for (const [key, value] of Object.entries(error)) {
 		const messageKey = value.find((item) => item.message != null)?.message;
-		const message =
-			messageKey != null ? (errorMessages[messageKey] ?? DEFAULT_MESSAGE) : DEFAULT_MESSAGE;
+		const message = errorMessages[messageKey ?? ''] ?? DEFAULT_MESSAGE;
 		if (key === 'root' || key.startsWith('root.')) {
 			out._errors = [...(out._errors ?? []), message];
 		} else {
-			(out as Record<string, string[]>)[key] = [message];
+			out[key as keyof T] = [message];
 		}
 	}
 
