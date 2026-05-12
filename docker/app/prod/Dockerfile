@@ -3,8 +3,7 @@ FROM node:24-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json /app/
-COPY svelte.config.js vite.config.ts /app/
+COPY package*.json tsconfig*.json svelte.config.js vite.config.ts .npmrc ./
 
 RUN npm ci
 
@@ -29,7 +28,7 @@ ENV HOST_HEADER=x-forwarded-host
 ENV PORT_HEADER=x-forwarded-port
 ENV ADDRESS_HEADER=x-forwarded-for
 
-COPY package*.json /app/
+COPY package*.json .npmrc ./
 RUN npm ci --omit=dev --omit=optional && npm cache clean --force
 
 COPY --from=builder /app/build /app/build
