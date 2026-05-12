@@ -15,5 +15,5 @@ cp "$SCRIPT_DIR/.dockerignore" "$ROOT_DIR/.dockerignore"
 cd "$ROOT_DIR"
 
 export COMPOSE_BAKE=true
-exec docker compose -f docker/app/prod/compose-prod.yml up -d --build
+exec docker compose -f docker/app/prod/compose.yml up -d --build
 
