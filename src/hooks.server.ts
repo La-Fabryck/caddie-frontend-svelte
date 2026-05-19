@@ -32,13 +32,13 @@ const ALLOWED_HEADERS = ['content-type', 'content-length', 'content-encoding', '
  */
 export async function handle({
 	event,
-	resolve
+	resolve,
 }: Parameters<Handle>[0]): Promise<ReturnType<Handle>> {
 	// `refreshedSetCookies`: per-request buffer; `handleFetch` may append after SSR refresh (see JSDoc on `App.Locals`).
 	event.locals.refreshedSetCookies = [];
 
 	const response = await resolve(event, {
-		filterSerializedResponseHeaders: (name) => ALLOWED_HEADERS.includes(name.toLowerCase())
+		filterSerializedResponseHeaders: (name) => ALLOWED_HEADERS.includes(name.toLowerCase()),
 	});
 
 	// After `resolve`, forward any `Set-Cookie` lines collected during `handleFetch` to the client.
@@ -66,7 +66,7 @@ const REFRESH_ENDPOINT_PATH = '/authentication/refresh';
 export async function handleFetch({
 	event,
 	request,
-	fetch
+	fetch,
 }: Parameters<HandleFetch>[0]): Promise<ReturnType<HandleFetch>> {
 	const originalUrl = request.url;
 	const isApiRequest = isApiPath(originalUrl);
@@ -87,12 +87,12 @@ export async function handleFetch({
 	// overwrite `cookie` for refresh/retry without mutating the original request's header bag.
 	const refreshHeaders = withRequestCookie(
 		new Headers(proxiedRequest.headers),
-		event.request.headers.get('cookie')
+		event.request.headers.get('cookie'),
 	);
 
 	const refreshRequest = new Request(`${BACKEND_URL}${REFRESH_ENDPOINT_PATH}`, {
 		method: 'POST',
-		headers: refreshHeaders
+		headers: refreshHeaders,
 	});
 	const refreshResponse = await fetch(refreshRequest);
 
@@ -110,7 +110,7 @@ export async function handleFetch({
 	}
 
 	const retriedRequest = new Request(proxiedRequest, {
-		headers: refreshHeaders
+		headers: refreshHeaders,
 	});
 	response = await fetch(retriedRequest);
 
@@ -125,7 +125,7 @@ function extractCookiePair(entry: string): { name: string; pair: string } | null
 
 	return {
 		name: pair.slice(0, nameValueSeparatorIndex).trim(),
-		pair
+		pair,
 	};
 }
 
@@ -164,7 +164,7 @@ function withSetCookieHeaders(response: Response, pendingSetCookieLines: string[
 	return new Response(response.body, {
 		status: response.status,
 		statusText: response.statusText,
-		headers
+		headers,
 	});
 }
 
@@ -195,7 +195,7 @@ function rewriteApiRequest(request: Request, requestCookie: string | null): Requ
 	return new Request(rewrittenUrl, {
 		method: request.method,
 		headers,
-		body: request.body
+		body: request.body,
 	});
 }
 
@@ -234,7 +234,7 @@ function shouldTrySsrRefresh(originalUrl: string, isApiRequest: boolean, status:
 /** Buffer refresh `Set-Cookie` lines to apply once in `handle` on the final page response. */
 function queueRefreshedCookies(
 	event: Parameters<HandleFetch>[0]['event'],
-	setCookieEntries: string[]
+	setCookieEntries: string[],
 ): void {
 	// Queue for `handle`: attach these to the page response so the browser stores new session cookies.
 	event.locals.refreshedSetCookies ??= [];

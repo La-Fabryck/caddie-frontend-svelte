@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { Pathname } from '$app/types';
 	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
 		DropdownMenuItem,
-		DropdownMenuTrigger
+		DropdownMenuTrigger,
 	} from '$lib/components/ui/dropdown-menu';
 	import type { Snippet } from 'svelte';
 
@@ -16,7 +16,7 @@
 
 	let {
 		items,
-		children
+		children,
 	}: {
 		items: MenuItem[];
 		children: Snippet;

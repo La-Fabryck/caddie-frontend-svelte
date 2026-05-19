@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import {
 		Button,
 		buttonVariants,
@@ -11,21 +11,21 @@
 		FormFieldErrors,
 		FormLabel,
 		Input,
-		Spinner
+		Spinner,
 	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
+	import { buildApiUrl } from '$lib/helpers/url';
 	import { userCreationErrorMessages } from '$lib/messages/user-creation';
-	import { superForm } from 'sveltekit-superforms';
-	import { SquareArrowOutUpRight } from '@lucide/svelte';
 	import type { User } from '$lib/response/user';
+	import { SquareArrowOutUpRight } from '@lucide/svelte';
+	import { superForm } from 'sveltekit-superforms';
 
 	type CreateAccountFormData = Omit<User, 'id'>;
 
 	const form = superForm({ email: '', name: '', password: '' } satisfies CreateAccountFormData, {
 		SPA: true,
-		validators: false
+		validators: false,
 	});
 
 	const { form: formData, errors } = form;
@@ -39,7 +39,7 @@
 			fetch,
 			url: url.toString(),
 			method: 'POST',
-			body: $formData
+			body: $formData,
 		});
 		submitting = false;
 

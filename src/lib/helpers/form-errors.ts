@@ -19,7 +19,7 @@ export type FormErrorsForSchema<T extends Record<string, unknown>> = Partial<
 
 export function backendErrorsToFormErrors<T extends Record<string, unknown>>(
 	error: BackendFormErrors<T>,
-	errorMessages: Record<string, string>
+	errorMessages: Record<string, string>,
 ): FormErrorsForSchema<T> {
 	const out: FormErrorsForSchema<T> = {};
 

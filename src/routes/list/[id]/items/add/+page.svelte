@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import {
 		Button,
 		FormControl,
@@ -11,15 +11,15 @@
 		FormFieldErrors,
 		FormLabel,
 		Input,
-		Spinner
+		Spinner,
 	} from '$lib/components/ui';
-	import ItemTypeCombobox from '../item-type-combobox.svelte';
 	import { mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
+	import { buildApiUrl } from '$lib/helpers/url';
 	import { itemErrorMessages } from '$lib/messages/item';
 	import type { Item } from '$lib/response/item';
 	import { superForm } from 'sveltekit-superforms';
+	import ItemTypeCombobox from '../item-type-combobox.svelte';
 	import type { PageProps } from './$types';
 
 	type CreateItemFormData = Pick<Item, 'name'> & Partial<Pick<Item, 'quantity' | 'itemTypeId'>>;
@@ -31,8 +31,8 @@
 		{ name: '', itemTypeId: null },
 		{
 			SPA: true,
-			validators: false
-		}
+			validators: false,
+		},
 	);
 
 	const { form: formData, errors } = form;
@@ -46,7 +46,7 @@
 			fetch,
 			url: url.toString(),
 			method: 'POST',
-			body: $formData
+			body: $formData,
 		});
 		submitting = false;
 

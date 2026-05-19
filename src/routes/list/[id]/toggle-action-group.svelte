@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { SquareCheckBig, SquarePen, Trash } from '@lucide/svelte';
 	import { Button } from '$lib/components/ui';
 	import { cn } from '$lib/utils';
+	import { SquareCheckBig, SquarePen, Trash } from '@lucide/svelte';
 
 	export type Action = 'selection' | 'edition' | 'deletion';
 

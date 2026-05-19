@@ -14,9 +14,9 @@ Build API URLs with [`src/lib/helpers/url.ts`](../src/lib/helpers/url.ts) (`buil
 
 ## Two different code paths (important)
 
-| Where it runs | Entry point | Refresh-on-401 |
-|---------------|-------------|------------------|
-| **Browser** (components, SPA actions) | [`src/lib/fetch/index.ts`](../src/lib/fetch/index.ts) (`fetchData`, `mutateData`, `deleteData`) | Single-flight `POST /api/authentication/refresh`, then **one** retry |
+| Where it runs                                  | Entry point                                                                                                         | Refresh-on-401                                                                                                                       |
+| ---------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| **Browser** (components, SPA actions)          | [`src/lib/fetch/index.ts`](../src/lib/fetch/index.ts) (`fetchData`, `mutateData`, `deleteData`)                     | Single-flight `POST /api/authentication/refresh`, then **one** retry                                                                 |
 | **Server** (`load` in `+page.server.ts`, etc.) | SvelteKit passes `fetch` into `load`; it goes through [`src/hooks.server.ts`](../src/hooks.server.ts) `handleFetch` | SSR refresh to backend `POST …/authentication/refresh`, merge cookies, retry once; then attach `Set-Cookie` to the **page response** |
 
 **Rule of thumb:** If data only comes from `+page.server.ts`, the initial API calls are **server-side** (no extra refresh logs in this repo—use DevTools **Network** if you need to inspect requests).

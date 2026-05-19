@@ -1,7 +1,5 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import CheckIcon from '@lucide/svelte/icons/check';
-	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
 	import { Button, Spinner } from '$lib/components/ui';
 	import {
 		Command,
@@ -9,13 +7,15 @@
 		CommandGroup,
 		CommandInput,
 		CommandItem,
-		CommandList
+		CommandList,
 	} from '$lib/components/ui/command';
 	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
 	import { fetchData, mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
-	import { cn } from '$lib/utils';
 	import type { ItemType } from '$lib/response/item-type';
+	import { cn } from '$lib/utils';
+	import CheckIcon from '@lucide/svelte/icons/check';
+	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
 
 	type Props = {
 		selectedItemTypeId?: string | null;
@@ -33,13 +33,13 @@
 	const normalizedQuery = $derived(searchValue.trim().toLowerCase());
 	const hasQuery = $derived(normalizedQuery.length > 0);
 	const selectedLabel = $derived(
-		itemTypes.find((itemType) => itemType.id === selectedItemTypeId)?.label
+		itemTypes.find((itemType) => itemType.id === selectedItemTypeId)?.label,
 	);
 
 	const canCreate = $derived(
 		hasQuery &&
 			!itemTypes.some((itemType) => itemType.label.toLowerCase() === normalizedQuery) &&
-			!creating
+			!creating,
 	);
 
 	$effect(() => {
@@ -72,7 +72,7 @@
 			fetch,
 			url: url.toString(),
 			method: 'POST',
-			body: { label }
+			body: { label },
 		});
 		creating = false;
 
@@ -124,7 +124,7 @@
 								<CheckIcon
 									class={cn(
 										'ml-auto size-4',
-										selectedItemTypeId == null ? 'opacity-100' : 'opacity-0'
+										selectedItemTypeId == null ? 'opacity-100' : 'opacity-0',
 									)}
 								/>
 							</CommandItem>
@@ -142,7 +142,7 @@
 									<CheckIcon
 										class={cn(
 											'ml-auto size-4',
-											selectedItemTypeId === itemType.id ? 'opacity-100' : 'opacity-0'
+											selectedItemTypeId === itemType.id ? 'opacity-100' : 'opacity-0',
 										)}
 									/>
 								</CommandItem>
