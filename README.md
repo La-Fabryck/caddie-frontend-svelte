@@ -1,38 +1,46 @@
-# sv
+# Caddie frontend (SvelteKit)
 
-Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
+SvelteKit app for Caddie. Local development runs on the host (Node + Vite); production builds use Docker under `docker/app/prod/`.
 
-## Creating a project
+## Prerequisites
 
-If you're seeing this, you've probably already done this step. Congrats!
-
-```sh
-# create a new project in the current directory
-npx sv create
-
-# create a new project in my-app
-npx sv create my-app
-```
+- Node.js 24+ (see [`.node-version`](.node-version))
+- Optional: Docker for prod deploy or backing services on `caddie_network`
 
 ## Developing
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+```sh
+npm ci
+cp .env.sample .env   # required for dev; VITE_BACKEND_URL is read via loadEnv in vite.config.ts
+npm run dev           # Vite on :5173; /api proxied to VITE_BACKEND_URL
+```
+
+`npm run dev` runs Vite and `svelte-check --watch` in parallel.
+
+Format and lint:
 
 ```sh
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
+npm run format   # oxfmt --write . && eslint --fix .
+npm run lint     # oxfmt --check . && eslint .
 ```
+
+Use the [Oxc VS Code extension](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) for format-on-save and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) for lint fixes on save (see [`.vscode/settings.json`](.vscode/settings.json)).
+
+Git hooks (installed via `npm ci` → `prepare`): **Husky** runs **lint-staged** on commit (`oxfmt --write` + `eslint --fix` on staged files).
 
 ## Building
 
-To create a production version of your app:
-
 ```sh
 npm run build
+npm run preview
 ```
 
-You can preview the production build with `npm run preview`.
+## Production (Docker)
 
-> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
+From the repo root:
+
+```sh
+./docker/app/prod/build.sh
+```
+
+Prod stack: `docker/app/prod/compose.yml` (app + nginx on port 8080).

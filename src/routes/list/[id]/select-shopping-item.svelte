@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from '$app/state';
-	import type { Item } from '$lib/response/item';
 	import { mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
 	import { debounce } from '$lib/helpers/debounce';
+	import { buildApiUrl } from '$lib/helpers/url';
+	import type { Item } from '$lib/response/item';
 	import ItemCheckbox from './item-checkbox.svelte';
 
 	type Props = {
@@ -24,7 +24,7 @@
 			fetch,
 			url: url.toString(),
 			method: 'PATCH',
-			body: { isInCart: checked }
+			body: { isInCart: checked },
 		});
 		if (result.data != null) {
 			invalidateItems();

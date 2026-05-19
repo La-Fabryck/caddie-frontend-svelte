@@ -1,14 +1,14 @@
 <script lang="ts">
 	import '../app.css';
-	import favicon from '$lib/assets/favicon.svg';
-	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 	import { resolve } from '$app/paths';
+	import favicon from '$lib/assets/favicon.svg';
 	import {
 		NavigationMenuItem,
 		NavigationMenuLink,
 		NavigationMenuList,
-		NavigationMenuRoot
+		NavigationMenuRoot,
 	} from '$lib/components/ui';
+	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
 
 	let { children } = $props();
 </script>
@@ -31,7 +31,7 @@
 									<a
 										href={resolve('/')}
 										class={navigationMenuTriggerStyle({
-											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>Home</a
 									>
 								{/snippet}
@@ -44,7 +44,7 @@
 									<a
 										href={resolve('/login')}
 										class={navigationMenuTriggerStyle({
-											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>Login</a
 									>
 								{/snippet}
@@ -57,7 +57,7 @@
 									<a
 										href="/404"
 										class={navigationMenuTriggerStyle({
-											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle'
+											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>404</a
 									>
 								{/snippet}

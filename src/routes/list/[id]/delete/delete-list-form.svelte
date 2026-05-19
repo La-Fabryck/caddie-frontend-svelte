@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import {
 		Button,
 		FormControl,
@@ -11,11 +11,11 @@
 		FormElementField,
 		FormLabel,
 		Input,
-		Spinner
+		Spinner,
 	} from '$lib/components/ui';
 	import { deleteData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
+	import { buildApiUrl } from '$lib/helpers/url';
 	import { listErrorMessages } from '$lib/messages/list';
 	import type { List } from '$lib/response/list';
 	import { superForm } from 'sveltekit-superforms';
@@ -36,7 +36,7 @@
 		const url = buildApiUrl(page.url.origin, `list/${list.id}`);
 		const result = await deleteData<List, Record<string, { message: string }[]>>({
 			fetch,
-			url: url.toString()
+			url: url.toString(),
 		});
 		submitting = false;
 

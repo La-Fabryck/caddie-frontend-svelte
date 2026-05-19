@@ -26,7 +26,7 @@ const REFRESH_ENDPOINT_PATH = '/api/authentication/refresh';
 const NON_REFRESHABLE_PATHS = new Set([
 	'/api/authentication/login',
 	'/api/authentication/refresh',
-	'/api/users'
+	'/api/users',
 ]);
 
 let refreshPromise: Promise<void> | null = null;
@@ -38,7 +38,7 @@ let refreshPromise: Promise<void> | null = null;
 function prepareRequest(url: URL | string, method: HTTPMethods = 'GET', body?: unknown): Request {
 	const headers = new Headers({
 		Accept: 'application/json',
-		'Content-Type': 'application/json'
+		'Content-Type': 'application/json',
 	});
 
 	if (body == null) {
@@ -48,7 +48,7 @@ function prepareRequest(url: URL | string, method: HTTPMethods = 'GET', body?: u
 	return new Request(url, {
 		method,
 		headers,
-		body: body != null ? JSON.stringify(body) : null
+		body: body != null ? JSON.stringify(body) : null,
 	});
 }
 
@@ -69,7 +69,7 @@ function shouldAttemptRefresh(request: Request, status: number): boolean {
 
 async function runRefresh(fetchInstance: typeof global.fetch): Promise<void> {
 	const refreshResponse = await fetchInstance(
-		new Request(REFRESH_ENDPOINT_PATH, { method: 'POST' })
+		new Request(REFRESH_ENDPOINT_PATH, { method: 'POST' }),
 	);
 
 	if (!refreshResponse.ok) {
@@ -79,7 +79,7 @@ async function runRefresh(fetchInstance: typeof global.fetch): Promise<void> {
 
 async function requestWithSingleFlightRefresh(
 	fetchInstance: typeof global.fetch,
-	request: Request
+	request: Request,
 ): Promise<Response> {
 	const response = await fetchInstance(request.clone());
 
@@ -129,19 +129,19 @@ async function extractContent<T>(response: Response): Promise<T | null> {
 
 export async function fetchData<TResponse = unknown, TError = unknown>({
 	fetch: fetchInstance,
-	url
+	url,
 }: GetConfig) {
 	const response = await requestWithSingleFlightRefresh(fetchInstance, prepareRequest(url));
 
 	if (response.ok) {
 		return {
 			data: (await response.json()) as TResponse,
-			error: null
+			error: null,
 		};
 	} else {
 		return {
 			data: null,
-			error: await extractContent<TError>(response)
+			error: await extractContent<TError>(response),
 		};
 	}
 }
@@ -150,54 +150,54 @@ export async function mutateData<TResponse = unknown, TError = unknown>({
 	fetch: fetchInstance,
 	url,
 	method,
-	body
+	body,
 }: MutateConfig) {
 	const response = await requestWithSingleFlightRefresh(
 		fetchInstance,
-		prepareRequest(url, method, body)
+		prepareRequest(url, method, body),
 	);
 
 	if (response.ok) {
 		return {
 			status: response.status,
 			data: await extractContent<TResponse>(response),
-			error: null
+			error: null,
 		};
 	} else {
 		const error = ((await extractContent<TError>(response)) ?? {
-			root: [{ message: 'REQUEST_FAILED' }]
+			root: [{ message: 'REQUEST_FAILED' }],
 		}) as TError;
 		return {
 			status: response.status,
 			data: null,
-			error
+			error,
 		};
 	}
 }
 
 export async function deleteData<TResponse = unknown, TError = unknown>({
 	fetch: fetchInstance,
-	url
+	url,
 }: GetConfig) {
 	const response = await requestWithSingleFlightRefresh(
 		fetchInstance,
-		prepareRequest(url, 'DELETE')
+		prepareRequest(url, 'DELETE'),
 	);
 
 	if (response.ok) {
 		return {
 			status: response.status,
 			data: await extractContent<TResponse>(response),
-			error: null
+			error: null,
 		};
 	} else {
 		const error = ((await extractContent<TError>(response)) ?? {
-			root: [{ message: 'REQUEST_FAILED' }]
+			root: [{ message: 'REQUEST_FAILED' }],
 		}) as TError;
 		return {
 			status: response.status,
 			data: null,
-			error
+			error,
 		};
 	}
 }

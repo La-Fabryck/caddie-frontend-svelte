@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { invalidateAll } from '$app/navigation';
 	import { Button } from '$lib/components/ui';
-	import { cn } from '$lib/utils';
+	import { Spinner } from '$lib/components/ui';
 	import type { Item } from '$lib/response/item';
+	import { cn } from '$lib/utils';
+	import type { PageProps } from './$types';
+	import RedirectWhenEmpty from './redirect-when-empty.svelte';
+	import RedirectWhenNotFound from './redirect-when-not-found.svelte';
 	import ShoppingListContent from './shopping-list-content.svelte';
 	import ShoppingListHeader from './shopping-list-header.svelte';
 	import ToggleActionGroup, { type Action } from './toggle-action-group.svelte';
-	import RedirectWhenEmpty from './redirect-when-empty.svelte';
-	import RedirectWhenNotFound from './redirect-when-not-found.svelte';
-	import { Spinner } from '$lib/components/ui';
-	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 
@@ -39,7 +39,7 @@
 
 		return Object.entries(groupedByLabel).map(([label, sectionItems]) => ({
 			label,
-			items: sectionItems ?? []
+			items: sectionItems ?? [],
 		}));
 	}
 </script>
@@ -66,7 +66,7 @@
 				size="sm"
 				class={cn(
 					'min-h-11 min-w-0 flex-1 rounded-none rounded-l-md border-l',
-					sortMode === 'default' && 'bg-accent text-accent-foreground'
+					sortMode === 'default' && 'bg-accent text-accent-foreground',
 				)}
 				aria-pressed={sortMode === 'default'}
 				onclick={() => (sortMode = 'default')}
@@ -78,7 +78,7 @@
 				size="sm"
 				class={cn(
 					'min-h-11 min-w-0 flex-1 rounded-none rounded-r-md border-l-0',
-					sortMode === 'type' && 'bg-accent text-accent-foreground'
+					sortMode === 'type' && 'bg-accent text-accent-foreground',
 				)}
 				aria-pressed={sortMode === 'type'}
 				onclick={() => (sortMode = 'type')}

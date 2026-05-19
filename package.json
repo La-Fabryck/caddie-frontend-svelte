@@ -1,25 +1,18 @@
 {
 	"name": "caddie-frontend-svelte",
-	"private": true,
 	"version": "0.2.0",
+	"private": true,
 	"type": "module",
-	"engines": {
-		"node": ">=24"
-	},
 	"scripts": {
 		"dev": "concurrently -n \"VITE,SVELTE-CHECK\" -c \"blue,green\" \"npm run dev:vite\" \"npm run dev:watch\"",
 		"dev:vite": "vite dev",
 		"dev:watch": "npm run check -- --watch",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo ''",
+		"prepare": "svelte-kit sync || echo '' && husky",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"format": "npm run format:svelte && npm run format:eslint",
-		"format:svelte": "prettier --write \"**/*.svelte\"",
-		"format:eslint": "eslint --fix .",
-		"lint": "npm run lint:svelte && npm run lint:eslint",
-		"lint:svelte": "prettier --check \"**/*.svelte\"",
-		"lint:eslint": "eslint .",
+		"format": "oxfmt --write . && eslint --fix .",
+		"lint": "oxfmt --check . && eslint .",
 		"test": "npm run test:unit -- --run"
 	},
 	"devDependencies": {
@@ -39,14 +32,13 @@
 		"concurrently": "^9.2.1",
 		"eslint": "^10.3.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.5",
 		"eslint-plugin-svelte": "^3.17.1",
 		"formsnap": "^2.0.1",
 		"globals": "^17.6.0",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.0.5",
+		"oxfmt": "^0.50.0",
 		"playwright": "^1.59.1",
-		"prettier": "^3.8.3",
-		"prettier-plugin-svelte": "^3.5.2",
-		"prettier-plugin-tailwindcss": "^0.8.0",
 		"svelte": "^5.55.5",
 		"svelte-check": "^4.4.8",
 		"sveltekit-superforms": "^2.30.1",
@@ -59,5 +51,15 @@
 		"vite": "^8.0.12",
 		"vitest": "^4.1.6",
 		"vitest-browser-svelte": "^2.1.1"
+	},
+	"lint-staged": {
+		"*.{js,ts,svelte}": [
+			"oxfmt --write",
+			"eslint --fix"
+		],
+		"*.{json,css,md,html,yml,yaml}": "oxfmt --write"
+	},
+	"engines": {
+		"node": ">=24"
 	}
 }
