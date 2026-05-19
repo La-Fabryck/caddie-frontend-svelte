@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Plus, SquareArrowOutUpRight, Trash2 } from '@lucide/svelte';
 	import { resolve } from '$app/paths';
-	import type { Item } from '$lib/response/item';
 	import { Button, buttonVariants } from '$lib/components/ui';
-	import SelectShoppingItem from './select-shopping-item.svelte';
+	import type { Item } from '$lib/response/item';
+	import { Plus, SquareArrowOutUpRight, Trash2 } from '@lucide/svelte';
 	import DeleteShoppingItem, { type ItemToDeleteTuple } from './delete-shopping-item.svelte';
+	import SelectShoppingItem from './select-shopping-item.svelte';
 
 	export type Action = 'selection' | 'edition' | 'deletion';
 	type SortMode = 'default' | 'type';
@@ -30,7 +30,7 @@
 		sortMode = 'default',
 		sections = [],
 		invalidateItems,
-		onActionChange
+		onActionChange,
 	}: Props = $props();
 
 	let itemsToDelete = $state<ItemToDeleteTuple[]>([]);

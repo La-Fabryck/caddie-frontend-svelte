@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { Plus, Settings } from '@lucide/svelte';
-	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
-	import { buttonVariants, Spinner } from '$lib/components/ui';
-	import Menu from '$lib/components/menu.svelte';
-	import type { PageProps } from './$types';
 	import { resolve } from '$app/paths';
+	import Menu from '$lib/components/menu.svelte';
+	import { buttonVariants, Spinner } from '$lib/components/ui';
+	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
+	import { Plus, Settings } from '@lucide/svelte';
+	import type { PageProps } from './$types';
 
 	let { data: listData }: PageProps = $props();
 </script>
@@ -61,7 +61,7 @@
 						<Menu
 							items={[
 								{ label: 'Modifier', path: `/list/${list.id}/edit` },
-								{ label: 'Supprimer', path: `/list/${list.id}/delete` }
+								{ label: 'Supprimer', path: `/list/${list.id}/delete` },
 							]}
 						>
 							<Settings size={36} />

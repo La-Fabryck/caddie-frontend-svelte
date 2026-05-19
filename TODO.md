@@ -30,13 +30,11 @@
   - Set dynamic page title per route.
   - Add website icon (favicon + app icons if needed).
 - DX / quality
-  - Add or finish Husky hooks (lint, format, checks on commit).
+  - [x] Husky + lint-staged (oxfmt + eslint on staged files).
 - UI styling
   - Improve overall layout and visual hierarchy.
   - Refine Tailwind styling for consistent spacing and typography.
   - Add proper reusable loader/skeleton states.
-
-
 
 ## v2 - Improvements and real-time collaboration
 

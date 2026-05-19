@@ -55,14 +55,14 @@
 	--color-text: oklch(0.871 0.048 273.665);
 	--color-subtext1: oklch(0.812 0.046 274.267);
 	--color-subtext0: oklch(0.751 0.044 273.533);
-	--color-overlay2: oklch(0.690 0.043 274.539);
+	--color-overlay2: oklch(0.69 0.043 274.539);
 	--color-overlay1: oklch(0.627 0.041 273.733);
 	--color-overlay0: oklch(0.561 0.041 276.475);
 	--color-surface2: oklch(0.494 0.039 275.683);
 	--color-surface1: oklch(0.426 0.039 276.948);
 	--color-surface0: oklch(0.354 0.037 275.985);
 	--color-base: var(--color-text);
-	--color-mantle: oklch(0.249 0.030 278.435);
+	--color-mantle: oklch(0.249 0.03 278.435);
 	--color-crust: oklch(0.219 0.025 280.657);
 	--color-yellow: oklch(0.879 0.074 84.751);
 	--color-green: oklch(0.835 0.108 138.15);

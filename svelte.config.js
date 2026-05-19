@@ -7,14 +7,14 @@ const config = {
 	// for more information about preprocessors
 	preprocess: vitePreprocess(),
 	kit: {
-		adapter: adapter()
+		adapter: adapter(),
 		// alias: {
 		// 	// an alias ending /* will only match
 		// 	// the contents of a directory, not the directory itself
 		// 	// '$components/*': 'src/components/*'
 		// },
 	},
-	extensions: ['.svelte']
+	extensions: ['.svelte'],
 };
 
 export default config;

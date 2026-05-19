@@ -15,7 +15,7 @@
 	data-slot="command-shortcut"
 	class={cn(
 		'ml-auto text-xs tracking-widest text-muted-foreground group-data-selected/command-item:text-foreground',
-		className
+		className,
 	)}
 	{...restProps}
 >

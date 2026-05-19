@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Spinner } from '$lib/components/ui';
-	import EditItemForm from './edit-item-form.svelte';
 	import type { PageProps } from './$types';
+	import EditItemForm from './edit-item-form.svelte';
 
 	let { data }: PageProps = $props();
 </script>

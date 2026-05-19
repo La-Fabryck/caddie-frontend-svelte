@@ -3,7 +3,7 @@ export {
 	buttonVariants,
 	type ButtonProps,
 	type ButtonSize,
-	type ButtonVariant
+	type ButtonVariant,
 } from './button';
 export { Checkbox } from './checkbox';
 export * from './form';

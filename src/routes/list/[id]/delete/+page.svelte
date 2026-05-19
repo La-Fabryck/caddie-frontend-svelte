@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Spinner } from '$lib/components/ui';
-	import DeleteListForm from './delete-list-form.svelte';
 	import type { PageProps } from './$types';
+	import DeleteListForm from './delete-list-form.svelte';
 
 	let { data }: PageProps = $props();
 </script>

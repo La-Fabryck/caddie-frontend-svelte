@@ -1,7 +1,7 @@
 <script lang="ts" module>
+	import { toggleVariants } from '$lib/components/ui/toggle/index.js';
 	import { getContext, setContext } from 'svelte';
 	import type { VariantProps } from 'tailwind-variants';
-	import { toggleVariants } from '$lib/components/ui/toggle/index.js';
 
 	type ToggleVariants = VariantProps<typeof toggleVariants>;
 
@@ -19,8 +19,8 @@
 </script>
 
 <script lang="ts">
-	import { ToggleGroup as ToggleGroupPrimitive } from 'bits-ui';
 	import { cn } from '$lib/utils.js';
+	import { ToggleGroup as ToggleGroupPrimitive } from 'bits-ui';
 
 	let {
 		ref = $bindable(null),
@@ -35,7 +35,7 @@
 	setToggleGroupCtx({
 		variant,
 		size,
-		spacing
+		spacing,
 	});
 </script>
 
@@ -53,7 +53,7 @@ get along, so we shut typescript up by casting `value` to `never`.
 	style={`--gap: ${spacing}`}
 	class={cn(
 		'group/toggle-group flex w-fit items-center gap-[--spacing(var(--gap))] rounded-md data-[spacing=default]:data-[variant=outline]:shadow-xs',
-		className
+		className,
 	)}
 	{...restProps}
 />

@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { invalidateAll } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import {
 		Button,
 		Checkbox,
@@ -12,15 +12,15 @@
 		FormFieldErrors,
 		FormLabel,
 		Input,
-		Spinner
+		Spinner,
 	} from '$lib/components/ui';
-	import ItemTypeCombobox from '../../item-type-combobox.svelte';
 	import { mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
 	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
+	import { buildApiUrl } from '$lib/helpers/url';
 	import { itemErrorMessages } from '$lib/messages/item';
 	import type { Item } from '$lib/response/item';
 	import { superForm } from 'sveltekit-superforms';
+	import ItemTypeCombobox from '../../item-type-combobox.svelte';
 
 	type EditItemFormData = Pick<Item, 'name' | 'isInCart' | 'quantity' | 'itemTypeId'>;
 	type Props = { item: Item };
@@ -33,7 +33,7 @@
 			name: item.name,
 			quantity: item.quantity,
 			isInCart: item.isInCart,
-			itemTypeId: item.itemTypeId
+			itemTypeId: item.itemTypeId,
 		}) satisfies EditItemFormData;
 	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
@@ -48,7 +48,7 @@
 			fetch,
 			url: url.toString(),
 			method: 'PATCH',
-			body: $formData
+			body: $formData,
 		});
 		submitting = false;
 

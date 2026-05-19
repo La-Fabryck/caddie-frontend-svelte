@@ -21,7 +21,7 @@ function formatDateToLongFormat(dateStr: DateString) {
 	const formatter = new Intl.DateTimeFormat('fr-FR', {
 		day: 'numeric',
 		month: 'long',
-		year: 'numeric'
+		year: 'numeric',
 	});
 
 	return formatter.format(date);
