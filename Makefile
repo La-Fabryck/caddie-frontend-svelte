@@ -1,4 +1,4 @@
-.PHONY: update update-doctor install dedupe lint format loc reset-dev help
+.PHONY: update update-doctor install loc reset-dev help
 
 update:
 	npx --yes npm-check-updates --upgrade --interactive --format group
@@ -15,21 +15,10 @@ reset-dev:
 	docker compose -f docker/app/prod/compose.yml down -v --rmi all --remove-orphans
 	@echo "Ensuring prod network exists..."
 	docker network create caddie_network || true
-	@echo "Removing root .dockerignore (copied by prod build)..."
-	rm -f .dockerignore
 	@echo "Dev environment reset complete. Start dev with: npm run dev"
 
 install:
 	npm ci
-
-dedupe:
-	npm dedupe
-
-lint:
-	npm run lint
-
-format:
-	npm run format
 
 loc:
 	npx --yes cloc --exclude-dir=node_modules,dist,coverage,.svelte-kit,static,build --exclude-list-file=package-lock.json .
@@ -38,8 +27,6 @@ help:
 	@echo "Available targets:"
 	@echo "  update         - Update dependencies"
 	@echo "  update-doctor  - Update dependencies with lint gate"
-	@echo "  reset-dev      - Tear down prod compose, recreate network, remove root .dockerignore"
+	@echo "  reset-dev      - Tear down prod compose, recreate network"
 	@echo "  install        - Install dependencies (npm ci)"
-	@echo "  lint           - Run format check and ESLint"
-	@echo "  format         - Run Oxfmt and ESLint --fix"
 	@echo "  loc            - Count lines of code"

@@ -1,3 +1,6 @@
+# Build context for prod images (repo root). Does not affect final image
+# layers — only what is sent to the daemon.
+
 # Dependencies (reinstalled in image)
 node_modules
 npm-debug.log*
@@ -14,6 +17,7 @@ build
 .gitignore
 .cursor
 .vscode
+.idea
 *.swp
 *.swo
 *~
@@ -38,6 +42,7 @@ LICENSE
 .editorconfig
 .prettierrc*
 .eslintrc*
+Makefile
 Dockerfile*
 compose*.yml
 docker-compose*
