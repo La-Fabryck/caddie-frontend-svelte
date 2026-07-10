@@ -4,7 +4,7 @@ SvelteKit app for Caddie. Local development runs on the host (Node + Vite); prod
 
 ## Prerequisites
 
-- Node.js 24+ (see [`.node-version`](.node-version))
+- Node.js 26+ (see [`.node-version`](.node-version))
 - Optional: Docker for prod deploy or backing services on `caddie_network`
 
 ## Developing
