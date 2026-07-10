@@ -1,13 +1,18 @@
-.PHONY: update update-doctor install loc reset-dev help
+.PHONY: update update-doctor ncu-doctor-test install loc reset-dev help
 
 update:
 	npx --yes npm-check-updates --upgrade --interactive --format group
 
-# Like update, but npm-check-updates doctor mode: upgrades that fail lint are reverted.
+# Doctor: each upgrade = lint + typecheck + build (host)
 update-doctor:
-	@echo "Doctor upgrade (lint gate)..."
-	npx --yes npm-check-updates --upgrade --interactive --doctor --doctorTest "npm run lint" --format group
+	@echo "Doctor upgrade (lint + typecheck + build gate)..."
+	npx --yes npm-check-updates --upgrade --interactive --doctor --doctorTest "make ncu-doctor-test" --format group
 	@echo "Update complete!"
+
+ncu-doctor-test:
+	npm run lint
+	npm run typecheck
+	npm run build
 
 # Reset prod Docker stack and optional external network for prod compose.
 reset-dev:
@@ -26,7 +31,7 @@ loc:
 help:
 	@echo "Available targets:"
 	@echo "  update         - Update dependencies"
-	@echo "  update-doctor  - Update dependencies with lint gate"
+	@echo "  update-doctor  - Update dependencies with lint + typecheck + build gate"
 	@echo "  reset-dev      - Tear down prod compose, recreate network"
 	@echo "  install        - Install dependencies (npm ci)"
 	@echo "  loc            - Count lines of code"

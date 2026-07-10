@@ -13,6 +13,7 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"format": "oxfmt --write . && eslint --fix .",
 		"lint": "oxfmt --check . && eslint .",
+		"typecheck": "npm run check",
 		"test": "npm run test:unit -- --run"
 	},
 	"devDependencies": {
