@@ -7,7 +7,7 @@ import { defineConfig } from 'vitest/config';
 
 export default defineConfig(({ mode }) => {
 	const { VITE_BACKEND_URL: backendUrl } = loadEnv(mode, process.cwd());
-	if (backendUrl == null || backendUrl.trim() === '') {
+	if (mode === 'development' && (backendUrl == null || backendUrl.trim() === '')) {
 		throw new Error(
 			'VITE_BACKEND_URL is required. Copy .env.sample to .env and set VITE_BACKEND_URL (e.g. http://localhost:3001).',
 		);
