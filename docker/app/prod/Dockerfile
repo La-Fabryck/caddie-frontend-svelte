@@ -29,7 +29,7 @@ ENV PORT_HEADER=x-forwarded-port
 ENV ADDRESS_HEADER=x-forwarded-for
 
 COPY package*.json .npmrc ./
-RUN npm ci --omit=dev --omit=optional && npm cache clean --force
+RUN npm ci --omit=dev --omit=optional --ignore-scripts && npm cache clean --force
 
 COPY --from=builder /app/build /app/build
 
