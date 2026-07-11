@@ -30,7 +30,7 @@
   - Set dynamic page title per route.
   - Add website icon (favicon + app icons if needed).
 - DX / quality
-  - [x] Husky + lint-staged (oxfmt + eslint on staged files).
+  - [x] Husky + nano-staged (oxfmt + eslint on staged files).
 - UI styling
   - Improve overall layout and visual hierarchy.
   - Refine Tailwind styling for consistent spacing and typography.
