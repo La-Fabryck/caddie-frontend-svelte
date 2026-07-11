@@ -26,7 +26,7 @@ npm run lint     # oxfmt --check . && eslint .
 
 Use the [Oxc VS Code extension](https://marketplace.visualstudio.com/items?itemName=oxc.oxc-vscode) for format-on-save and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) for lint fixes on save (see [`.vscode/settings.json`](.vscode/settings.json)).
 
-Git hooks (installed via `npm ci` → `prepare`): **Husky** runs **lint-staged** on commit (`oxfmt --write` + `eslint --fix` on staged files).
+Git hooks (installed via `npm ci` → `prepare`): **Husky** runs **nano-staged** on commit (`oxfmt --write` + `eslint --fix` on staged files).
 
 ## Building
 
