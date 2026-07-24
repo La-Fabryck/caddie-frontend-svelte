@@ -9,7 +9,9 @@ update-doctor:
 	npx --yes npm-check-updates --upgrade --interactive --doctor --doctorTest "make ncu-doctor-test" --format group
 	@echo "Update complete!"
 
+# Fresh eslint run: cache can hide rule/plugin regressions after upgrades
 ncu-doctor-test:
+	rm -f .eslintcache
 	npm run lint
 	npm run typecheck
 	npm run build

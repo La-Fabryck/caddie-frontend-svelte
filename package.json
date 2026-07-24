@@ -11,8 +11,12 @@
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo '' && husky",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"format": "oxfmt --write . && eslint --fix .",
-		"lint": "oxfmt --check . && eslint .",
+		"lint": "npm run check:oxfmt -- . && npm run check:eslint -- .",
+		"format": "npm run fix:oxfmt -- . && npm run fix:eslint -- .",
+		"check:oxfmt": "oxfmt --check",
+		"check:eslint": "NODE_OPTIONS=\"--disable-warning=ESLintPoorConcurrencyWarning\" eslint --cache --cache-strategy content --concurrency 4 --max-warnings 0",
+		"fix:oxfmt": "oxfmt --write",
+		"fix:eslint": "NODE_OPTIONS=\"--disable-warning=ESLintPoorConcurrencyWarning\" eslint --cache --cache-strategy content --concurrency 4 --max-warnings 0 --fix",
 		"typecheck": "npm run check",
 		"test": "npm run test:unit -- --run"
 	},
@@ -55,10 +59,10 @@
 	},
 	"nano-staged": {
 		"*.{js,ts,svelte}": [
-			"oxfmt --write",
-			"eslint --fix"
+			"npm run fix:oxfmt --",
+			"npm run fix:eslint --"
 		],
-		"*.{json,css,md,html,yml,yaml}": "oxfmt --write"
+		"*.{json,css,md,html,yml,yaml}": "npm run fix:oxfmt --"
 	},
 	"engines": {
 		"node": ">=26",
