@@ -9,7 +9,7 @@
 		"dev:watch": "npm run check -- --watch",
 		"build": "vite build",
 		"preview": "vite preview",
-		"prepare": "svelte-kit sync || echo '' && husky",
+		"prepare": "svelte-kit sync || echo ''",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "npm run check:oxfmt -- . && npm run check:eslint -- .",
 		"format": "npm run fix:oxfmt -- . && npm run fix:eslint -- .",
@@ -40,8 +40,7 @@
 		"eslint-plugin-svelte": "^3.22.0",
 		"formsnap": "^2.0.1",
 		"globals": "^17.7.0",
-		"husky": "^9.1.7",
-		"nano-staged": "^1.0.2",
+		"lefthook": "^2.1.10",
 		"oxfmt": "^0.60.0",
 		"playwright": "^1.61.1",
 		"svelte": "^5.56.7",
@@ -57,18 +56,12 @@
 		"vitest": "^4.1.10",
 		"vitest-browser-svelte": "^3.0.0"
 	},
-	"nano-staged": {
-		"*.{js,ts,svelte}": [
-			"npm run fix:oxfmt --",
-			"npm run fix:eslint --"
-		],
-		"*.{json,css,md,html,yml,yaml}": "npm run fix:oxfmt --"
-	},
 	"engines": {
 		"node": ">=26",
 		"npm": ">=11.15.0"
 	},
 	"allowScripts": {
-		"fsevents": false
+		"fsevents": false,
+		"lefthook": true
 	}
 }
