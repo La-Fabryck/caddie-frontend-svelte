@@ -10,7 +10,7 @@
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --incremental",
 		"lint": "npm run check:oxfmt -- . && npm run check:eslint -- .",
 		"format": "npm run fix:oxfmt -- . && npm run fix:eslint -- .",
 		"check:oxfmt": "oxfmt --check",
