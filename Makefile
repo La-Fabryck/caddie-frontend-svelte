@@ -25,7 +25,7 @@ reset-dev:
 	@echo "Dev environment reset complete. Start dev with: npm run dev"
 
 install:
-	npm ci
+	npm ci --prefer-offline
 
 loc:
 	npx --yes cloc --exclude-dir=node_modules,dist,coverage,.svelte-kit,static,build --exclude-list-file=package-lock.json .

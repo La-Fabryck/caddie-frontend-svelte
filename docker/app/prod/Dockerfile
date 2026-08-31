@@ -5,7 +5,7 @@ WORKDIR /app
 
 COPY package*.json tsconfig*.json svelte.config.js vite.config.ts .npmrc ./
 
-RUN npm ci
+RUN npm ci --prefer-offline
 
 COPY . /app
 
@@ -29,7 +29,7 @@ ENV PORT_HEADER=x-forwarded-port
 ENV ADDRESS_HEADER=x-forwarded-for
 
 COPY package*.json .npmrc ./
-RUN npm ci --omit=dev --omit=optional --ignore-scripts && npm cache clean --force
+RUN npm ci --prefer-offline --omit=dev --omit=optional --ignore-scripts && npm cache clean --force
 
 COPY --from=builder /app/build /app/build
 
