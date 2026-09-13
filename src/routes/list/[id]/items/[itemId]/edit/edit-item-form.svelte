@@ -98,7 +98,7 @@
 					/>
 				{/snippet}
 			</FormControl>
-			<FormDescription>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription>
+			<FormDescription>Garde une quantité pour ton article fieu !</FormDescription>
 			<FormFieldErrors />
 		{/snippet}
 	</FormElementField>
