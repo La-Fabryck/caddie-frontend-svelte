@@ -9,3 +9,13 @@ export function buildApiUrl(origin: string, pathname: string): URL {
 	url.pathname = `/api/${pathname}`;
 	return url;
 }
+
+export function buildListCollectionUrl(
+	origin: string,
+	{ limit, offset }: { limit: number; offset: number },
+): URL {
+	const url = buildApiUrl(origin, 'list');
+	url.searchParams.set('limit', String(limit));
+	url.searchParams.set('offset', String(offset));
+	return url;
+}

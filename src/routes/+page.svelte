@@ -1,10 +1,9 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import Menu from '$lib/components/menu.svelte';
 	import { buttonVariants, Spinner } from '$lib/components/ui';
-	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
-	import { Plus, Settings } from '@lucide/svelte';
+	import { Plus } from '@lucide/svelte';
 	import type { PageProps } from './$types';
+	import ShoppingLists from './shopping-lists.svelte';
 
 	let { data: listData }: PageProps = $props();
 </script>
@@ -23,52 +22,10 @@
 
 {#await listData.lists}
 	<Spinner class="size-20" />
-{:then listData}
-	{#if !listData.data?.length}
-		<p>Créé ta première liste nondidju !</p>
+{:then listResult}
+	{#if listResult.data == null}
+		<p>Impossible de charger tes listes.</p>
 	{:else}
-		<ul>
-			{#each listData.data as list (list.id)}
-				<li class="my-2 flex justify-between gap-x-6 bg-surface0 p-5 hover:bg-surface1">
-					<a href={resolve(`/list/${list.id}`)} class="flex min-w-0 flex-auto gap-x-4">
-						<div class="min-w-0 flex-auto">
-							<p class="text-lg font-bold">{list.title}</p>
-							<p class="mt-1 truncate text-xs/5">
-								Créé le <time datetime={formatDateToISO(list.createdAt)}
-									>{formatDateToLongFormat(list.createdAt)}</time
-								>
-							</p>
-						</div>
-						<div class="flex flex-col items-center sm:items-end">
-							<div class="mt-1 flex items-center gap-x-1.5">
-								<div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-									<p class="text-xs/5">En cours</p>
-								</div>
-								<div class="rounded-full bg-green p-1">
-									<div class="size-1.5 rounded-full bg-green"></div>
-								</div>
-							</div>
-							<div class="mt-1 hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-								<p class="text-xs/5">
-									Modifié le <time datetime={formatDateToISO(list.updatedAt)}
-										>{formatDateToLongFormat(list.updatedAt)}</time
-									>
-								</p>
-							</div>
-						</div>
-					</a>
-					<div class="mt-2 shrink-0">
-						<Menu
-							items={[
-								{ label: 'Modifier', path: `/list/${list.id}/edit` },
-								{ label: 'Supprimer', path: `/list/${list.id}/delete` },
-							]}
-						>
-							<Settings size={36} />
-						</Menu>
-					</div>
-				</li>
-			{/each}
-		</ul>
+		<ShoppingLists initial={listResult.data} />
 	{/if}
 {/await}

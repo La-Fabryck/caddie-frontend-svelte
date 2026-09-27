@@ -16,16 +16,11 @@
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
 	import { buildApiUrl } from '$lib/helpers/url';
 	import { listErrorMessages } from '$lib/messages/list';
+	import type { List } from '$lib/response/list';
 	import { superForm } from 'sveltekit-superforms';
 
 	type CreateListFormData = { title: string; pseudonym: string };
-	type ListWithSubs = {
-		id: string;
-		title: string;
-		createdAt: string;
-		updatedAt: string;
-		subscribers: unknown[];
-	};
+	type ListWithSubs = List & { subscribers: unknown[] };
 
 	const form = superForm({ title: '', pseudonym: '' } satisfies CreateListFormData, {
 		SPA: true,

@@ -9,7 +9,7 @@
 - Lists
   - [x] Edit
   - [x] Remove
-  - Add list status flag (`active` / `inactive`).
+    - [x] List archive flag (`isArchived`) + paginated GET /list.
   - [x] Sort by `updatedAt`
 - Items
   - [x] Edit
