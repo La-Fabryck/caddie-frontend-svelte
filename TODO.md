@@ -11,6 +11,7 @@
   - [x] Remove
     - [x] List archive flag (`isArchived`) + paginated GET /list.
   - [x] Sort by `updatedAt`
+  - Sync list detail UI state to the URL (`action`, `sortMode` on `list/[id]`): share/refresh/back; pairs with keeping search in login `?redirect=`.
 - Items
   - [x] Edit
   - [x] Remove
