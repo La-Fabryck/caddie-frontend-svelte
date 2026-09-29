@@ -24,7 +24,7 @@
   - Create share/subscription link for a list.
   - Allow users to subscribe/join a shared list.
 - Auth
-  - Preserve intended destination: redirect to login, then back to requested page.
+  - [x] Preserve intended destination: redirect to login, then back to requested page.
   - Implement robust logout (clear local state and invalidate cached data).
 - Browser/page polish
   - Set dynamic page title per route.
@@ -38,6 +38,12 @@
 
 ## v2 - Improvements and real-time collaboration
 
+- Auth (follow-ups from login redirect)
+  - Remember: new authenticated `+page.server.ts` loads must call `redirectIfUnauthorized`.
+  - Restore search/hash in `?redirect=` if deep links need more than pathname.
+  - Client 401 mid-session: after refresh fails, send user to `/login?redirect=…` (load-more, mutations, etc.), not only SSR loads.
+  - Create-account: after signup, either auto-login or keep `?redirect=` through a forced login.
+  - SPA routes without server load (e.g. `/list/create`): unauthenticated users fail in the form — add load/guard when moving off SPA-only.
 - Lists
   - Create a new list from missing items.
 - Consider server-driven forms (later)

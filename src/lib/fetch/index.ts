@@ -135,15 +135,17 @@ export async function fetchData<TResponse = unknown, TError = unknown>({
 
 	if (response.ok) {
 		return {
+			status: response.status,
 			data: (await response.json()) as TResponse,
 			error: null,
 		};
-	} else {
-		return {
-			data: null,
-			error: await extractContent<TError>(response),
-		};
 	}
+
+	return {
+		status: response.status,
+		data: null,
+		error: await extractContent<TError>(response),
+	};
 }
 
 export async function mutateData<TResponse = unknown, TError = unknown>({
