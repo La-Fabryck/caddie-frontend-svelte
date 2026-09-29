@@ -15,7 +15,7 @@
 	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
+	import { buildApiUrl, buildLoginRedirectSearch, loginReturnPath } from '$lib/helpers/url';
 	import { userCreationErrorMessages } from '$lib/messages/user-creation';
 	import type { User } from '$lib/response/user';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
@@ -32,6 +32,9 @@
 
 	let submitting = $state(false);
 
+	const returnPath = $derived(loginReturnPath(page.url));
+	const loginSearch = $derived(buildLoginRedirectSearch(returnPath));
+
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'users');
@@ -44,7 +47,7 @@
 		submitting = false;
 
 		if (result.error == null) {
-			goto(resolve('/'), { replaceState: true });
+			goto(resolve(returnPath), { replaceState: true });
 		} else {
 			const formErrors = backendErrorsToFormErrors(result.error, userCreationErrorMessages);
 			errors.set(formErrors);
@@ -55,7 +58,7 @@
 <h1 class="mb-8 text-center">Créer son compte</h1>
 <a
 	class={buttonVariants({ variant: 'link', class: 'mb-8 w-full text-center' })}
-	href={resolve('/login')}
+	href="{resolve('/login')}{loginSearch}"
 >
 	Vous avez déjà un compte ? S'authentifier <SquareArrowOutUpRight />
 </a>

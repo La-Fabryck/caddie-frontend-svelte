@@ -1,6 +1,7 @@
 <script lang="ts">
 	import '../app.css';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import favicon from '$lib/assets/favicon.svg';
 	import {
 		NavigationMenuItem,
@@ -9,8 +10,11 @@
 		NavigationMenuRoot,
 	} from '$lib/components/ui';
 	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
+	import { buildLoginRedirectSearch } from '$lib/helpers/url';
 
 	let { children } = $props();
+
+	const loginSearch = $derived(buildLoginRedirectSearch(page.url.pathname));
 </script>
 
 <svelte:head>
@@ -42,7 +46,7 @@
 							<NavigationMenuLink>
 								{#snippet child()}
 									<a
-										href={resolve('/login')}
+										href="{resolve('/login')}{loginSearch}"
 										class={navigationMenuTriggerStyle({
 											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>Login</a

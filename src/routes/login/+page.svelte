@@ -15,7 +15,7 @@
 	} from '$lib/components/ui';
 	import { mutateData } from '$lib/fetch';
 	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
+	import { buildApiUrl, buildLoginRedirectSearch, loginReturnPath } from '$lib/helpers/url';
 	import { loginErrorMessages } from '$lib/messages/login';
 	import type { User } from '$lib/response/user';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
@@ -32,6 +32,9 @@
 
 	let submitting = $state(false);
 
+	const returnPath = $derived(loginReturnPath(page.url));
+	const createAccountSearch = $derived(buildLoginRedirectSearch(returnPath));
+
 	async function handleSubmit() {
 		submitting = true;
 		const url = buildApiUrl(page.url.origin, 'authentication/login');
@@ -45,8 +48,7 @@
 
 		// Success: no error (response.ok). Body may be empty so result.data can be null.
 		if (result.error == null) {
-			window.localStorage.setItem('isAuthenticated', '1');
-			goto(resolve('/'), { replaceState: true });
+			goto(resolve(returnPath), { replaceState: true });
 		} else {
 			const formErrors = backendErrorsToFormErrors(result.error, loginErrorMessages);
 			errors.set(formErrors);
@@ -57,7 +59,7 @@
 <h1 class="text-center">S'authentifier</h1>
 <a
 	class={buttonVariants({ variant: 'link', class: 'my-8 w-full text-center' })}
-	href={resolve('/create-account')}
+	href="{resolve('/create-account')}{createAccountSearch}"
 >
 	Vous n'avez pas encore de compte ? Créer votre compte <SquareArrowOutUpRight />
 </a>
