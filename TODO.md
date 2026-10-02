@@ -22,8 +22,8 @@
   - [x] Add item type.
   - [x] Add quantity support.
 - Subscription
-  - Create share/subscription link for a list.
-  - Allow users to subscribe/join a shared list.
+  - [x] Create share/subscription link for a list.
+  - [x] Allow users to subscribe/join a shared list.
 - Auth
   - [x] Preserve intended destination: redirect to login, then back to requested page.
   - Implement robust logout (clear local state and invalidate cached data).
@@ -36,6 +36,7 @@
   - Improve overall layout and visual hierarchy.
   - Refine Tailwind styling for consistent spacing and typography.
   - Add proper reusable loader/skeleton states.
+  - Light toaster (shadcn-svelte sonner) for action/side-effect errors (e.g. item-type create, share revoke) so we stop inventing local error banners; keep field validation inline via `backendErrorsToFormErrors`.
 
 ## v2 - Improvements and real-time collaboration
 

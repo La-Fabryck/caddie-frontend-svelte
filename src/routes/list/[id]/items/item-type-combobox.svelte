@@ -12,6 +12,7 @@
 	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
 	import { fetchData, mutateData } from '$lib/fetch';
 	import { buildApiUrl } from '$lib/helpers/url';
+	import { itemTypeErrorMessages } from '$lib/messages/item-type';
 	import type { ItemType } from '$lib/response/item-type';
 	import { cn } from '$lib/utils';
 	import CheckIcon from '@lucide/svelte/icons/check';
@@ -21,12 +22,14 @@
 		selectedItemTypeId?: string | null;
 	};
 
+	type BackendMessage = { message: string };
+
 	let { selectedItemTypeId = $bindable(null) }: Props = $props();
 
 	let itemTypes = $state<ItemType[]>([]);
 	let loading = $state(true);
 	let creating = $state(false);
-	let submitError = $state<string | null>(null);
+	let error = $state<string | null>(null);
 	let open = $state(false);
 	let searchValue = $state('');
 
@@ -46,9 +49,23 @@
 		loadItemTypes();
 	});
 
+	function messageFromBackend(
+		backendError: Record<string, BackendMessage[]> | null,
+	): string | null {
+		const messageKey = Object.values(backendError ?? {})
+			.flat()
+			.find((item) => item.message != null)?.message;
+
+		if (messageKey == null) {
+			return null;
+		}
+
+		return itemTypeErrorMessages[messageKey];
+	}
+
 	async function loadItemTypes() {
 		loading = true;
-		submitError = null;
+		error = null;
 
 		const url = buildApiUrl(page.url.origin, 'item-types');
 		const result = await fetchData<ItemType[]>({ fetch, url: url.toString() });
@@ -57,18 +74,18 @@
 		if (result.data != null) {
 			itemTypes = result.data;
 		} else {
-			submitError = "Impossible de charger les types d'articles.";
+			error = "Impossible de charger les types d'articles.";
 		}
 	}
 
 	async function createItemType() {
 		if (!canCreate) return;
 		creating = true;
-		submitError = null;
+		error = null;
 
 		const label = searchValue.trim();
 		const url = buildApiUrl(page.url.origin, 'item-types');
-		const result = await mutateData<ItemType>({
+		const result = await mutateData<ItemType, Record<string, BackendMessage[]>>({
 			fetch,
 			url: url.toString(),
 			method: 'POST',
@@ -84,7 +101,7 @@
 			return;
 		}
 
-		submitError = "Impossible de creer ce type d'article.";
+		error = messageFromBackend(result.error) ?? "Impossible de creer ce type d'article.";
 	}
 
 	function clearSelection() {
@@ -171,7 +188,7 @@
 		</PopoverContent>
 	</Popover>
 
-	{#if submitError != null}
-		<p class="text-sm text-destructive">{submitError}</p>
+	{#if error != null}
+		<p class="text-sm text-destructive">{error}</p>
 	{/if}
 </div>
