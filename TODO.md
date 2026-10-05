@@ -32,6 +32,7 @@
   - Add website icon (favicon + app icons if needed).
 - DX / quality
   - [x] Lefthook (oxfmt + eslint on staged files + typecheck).
+  - Blocked on Superforms 3: formsnap still peers v2 only — https://github.com/svecosystem/formsnap/issues/234 (keep `sveltekit-superforms` on 2.x until that lands).
 - UI styling
   - Improve overall layout and visual hierarchy.
   - Refine Tailwind styling for consistent spacing and typography.
