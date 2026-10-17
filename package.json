@@ -21,7 +21,6 @@
 		"test": "npm run test:unit -- --run"
 	},
 	"devDependencies": {
-		"@eslint/compat": "^2.1.1",
 		"@eslint/js": "^10.0.1",
 		"@internationalized/date": "^3.12.4",
 		"@lucide/svelte": "^1.58.0",
