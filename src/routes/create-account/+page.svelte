@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import {
 		Button,
 		buttonVariants,
@@ -12,12 +9,15 @@
 		FormLabel,
 		Input,
 		Spinner,
-	} from '$lib/components/ui';
-	import { mutateData } from '$lib/fetch';
-	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl, buildLoginRedirectSearch, loginReturnPath } from '$lib/helpers/url';
-	import { userCreationErrorMessages } from '$lib/messages/user-creation';
-	import type { User } from '$lib/response/user';
+	} from '#lib/components/ui/index.js';
+	import { mutateData } from '#lib/fetch/index.js';
+	import { backendErrorsToFormErrors, type BackendFormErrors } from '#lib/helpers/form-errors.js';
+	import { buildApiUrl, buildLoginRedirectSearch, loginReturnPath } from '#lib/helpers/url.js';
+	import { userCreationErrorMessages } from '#lib/messages/user-creation.js';
+	import type { User } from '#lib/response/user.js';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { SquareArrowOutUpRight } from '@lucide/svelte';
 	import { superForm } from 'sveltekit-superforms';
 
@@ -47,7 +47,7 @@
 		submitting = false;
 
 		if (result.error == null) {
-			goto(resolve(returnPath), { replaceState: true });
+			goto(resolve(returnPath), { replace: true });
 		} else {
 			const formErrors = backendErrorsToFormErrors(result.error, userCreationErrorMessages);
 			errors.set(formErrors);
@@ -58,7 +58,7 @@
 <h1 class="mb-8 text-center">Créer son compte</h1>
 <a
 	class={buttonVariants({ variant: 'link', class: 'mb-8 w-full text-center' })}
-	href="{resolve('/login')}{loginSearch}"
+	href="{resolve('login')}{loginSearch}"
 >
 	Vous avez déjà un compte ? S'authentifier <SquareArrowOutUpRight />
 </a>

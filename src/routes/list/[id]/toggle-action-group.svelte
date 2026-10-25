@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui';
-	import { cn } from '$lib/utils';
+	import { Button } from '#lib/components/ui/index.js';
+	import { cn } from '#lib/utils.js';
 	import { SquareCheckBig, SquarePen, Trash } from '@lucide/svelte';
 
 	export type Action = 'selection' | 'edition' | 'deletion';

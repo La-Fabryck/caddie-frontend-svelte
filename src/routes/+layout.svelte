@@ -1,16 +1,16 @@
 <script lang="ts">
 	import '../app.css';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
-	import favicon from '$lib/assets/favicon.svg';
+	import favicon from '#lib/assets/favicon.svg';
 	import {
 		NavigationMenuItem,
 		NavigationMenuLink,
 		NavigationMenuList,
 		NavigationMenuRoot,
-	} from '$lib/components/ui';
-	import { navigationMenuTriggerStyle } from '$lib/components/ui/navigation-menu/navigation-menu-trigger.svelte';
-	import { buildLoginRedirectSearch } from '$lib/helpers/url';
+		navigationMenuTriggerStyle,
+	} from '#lib/components/ui/index.js';
+	import { buildLoginRedirectSearch } from '#lib/helpers/url.js';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 
@@ -33,7 +33,7 @@
 							<NavigationMenuLink>
 								{#snippet child()}
 									<a
-										href={resolve('/')}
+										href={resolve('')}
 										class={navigationMenuTriggerStyle({
 											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>Home</a
@@ -46,7 +46,7 @@
 							<NavigationMenuLink>
 								{#snippet child()}
 									<a
-										href="{resolve('/login')}{loginSearch}"
+										href="{resolve('login')}{loginSearch}"
 										class={navigationMenuTriggerStyle({
 											class: 'bg-transparent hover:bg-mantle data-[state=open]:bg-mantle',
 										})}>Login</a

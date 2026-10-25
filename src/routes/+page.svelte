@@ -1,6 +1,6 @@
 <script lang="ts">
+	import { buttonVariants, Spinner } from '#lib/components/ui/index.js';
 	import { resolve } from '$app/paths';
-	import { buttonVariants, Spinner } from '$lib/components/ui';
 	import { Plus } from '@lucide/svelte';
 	import type { PageProps } from './$types';
 	import ShoppingLists from './shopping-lists.svelte';
@@ -10,11 +10,8 @@
 
 <a
 	class={buttonVariants({ variant: 'default', size: 'lg', class: 'font-semibold' })}
-	href={resolve('/list/create')}
+	href={resolve('list/create')}><Plus />Nouvelle liste</a
 >
-	<Plus />
-	Nouvelle liste
-</a>
 
 <div class="mx-auto my-5 max-w-2xl lg:mx-0">
 	<h2 class="text-4xl font-semibold tracking-tight sm:text-5xl">Mes listes de courses</h2>

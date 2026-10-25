@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { invalidateAll } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import {
 		Button,
 		FormControl,
@@ -12,12 +8,15 @@
 		FormLabel,
 		Input,
 		Spinner,
-	} from '$lib/components/ui';
-	import { mutateData } from '$lib/fetch';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { listErrorMessages } from '$lib/messages/list';
-	import type { List } from '$lib/response/list';
+	} from '#lib/components/ui/index.js';
+	import { mutateData } from '#lib/fetch/index.js';
+	import { backendErrorsToFormErrors } from '#lib/helpers/form-errors.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { listErrorMessages } from '#lib/messages/list.js';
+	import type { List } from '#lib/response/list.js';
+	import { goto, refreshAll } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { superForm } from 'sveltekit-superforms';
 
 	type EditListFormData = Pick<List, 'title'>;
@@ -27,11 +26,8 @@
 
 	/** Closure over list so Svelte tracks it; superForm calls this to get initial data. */
 	const getInitialFormState = () => ({ title: list.title }) satisfies EditListFormData;
-	const form = superForm(getInitialFormState(), {
-		SPA: true,
-		validators: false,
-	});
 
+	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 	const { form: formData, errors } = form;
 
 	let submitting = $state(false);
@@ -48,8 +44,8 @@
 		submitting = false;
 
 		if (result.error == null && result.data != null) {
-			await invalidateAll();
-			goto(resolve(`/list/${list.id}`), { replaceState: true });
+			await refreshAll();
+			goto(resolve(`list/${list.id}`), { replace: true });
 		} else if (result.error != null) {
 			const formErrors = backendErrorsToFormErrors(result.error, listErrorMessages);
 			errors.set(formErrors);

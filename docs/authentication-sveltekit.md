@@ -21,7 +21,7 @@ Build API URLs with [`src/lib/helpers/url.ts`](../src/lib/helpers/url.ts) (`buil
 
 **Rule of thumb:** If data only comes from `+page.server.ts`, the initial API calls are **server-side** (no extra refresh logs in this repo—use DevTools **Network** if you need to inspect requests).
 
-## Browser path (`$lib/fetch`)
+## Browser path (`#lib/fetch/index.js`)
 
 ### Behaviour
 

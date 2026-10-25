@@ -1,11 +1,16 @@
 import { fileURLToPath } from 'node:url';
 import js from '@eslint/js';
+import { loadConfig } from '@sveltejs/load-config';
 import eslintConfigPrettier from 'eslint-config-prettier';
 import svelte from 'eslint-plugin-svelte';
 import { defineConfig, includeIgnoreFile } from 'eslint/config';
 import globals from 'globals';
 import ts from 'typescript-eslint';
-import svelteConfig from './svelte.config.js';
+
+const loadedConfig = (await loadConfig('./', { traverse: false }))?.config;
+// eslint --cache and --concurrency cannot serialize typescript.config.
+// https://github.com/sveltejs/eslint-plugin-svelte/blob/main/README.md
+const svelteConfig = { ...loadedConfig, typescript: undefined };
 
 const gitignorePath = fileURLToPath(new URL('./.gitignore', import.meta.url));
 

@@ -1,8 +1,8 @@
 <script lang="ts">
+	import { deleteData } from '#lib/fetch/index.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import type { Item } from '#lib/response/item.js';
 	import { page } from '$app/state';
-	import { deleteData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import type { Item } from '$lib/response/item';
 	import ItemCheckbox from './item-checkbox.svelte';
 
 	export type ItemToDeleteTuple = [string, () => Promise<void>];

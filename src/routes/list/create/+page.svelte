@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import {
 		Button,
 		FormControl,
@@ -11,12 +8,15 @@
 		FormLabel,
 		Input,
 		Spinner,
-	} from '$lib/components/ui';
-	import { mutateData } from '$lib/fetch';
-	import { backendErrorsToFormErrors, type BackendFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { listErrorMessages } from '$lib/messages/list';
-	import type { List } from '$lib/response/list';
+	} from '#lib/components/ui/index.js';
+	import { mutateData } from '#lib/fetch/index.js';
+	import { backendErrorsToFormErrors, type BackendFormErrors } from '#lib/helpers/form-errors.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { listErrorMessages } from '#lib/messages/list.js';
+	import type { List } from '#lib/response/list.js';
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { superForm } from 'sveltekit-superforms';
 
 	type CreateListFormData = { title: string; pseudonym: string };
@@ -43,7 +43,7 @@
 		submitting = false;
 
 		if (result.error == null && result.data?.id != null) {
-			goto(resolve(`/list/${result.data.id}`), { replaceState: true });
+			goto(resolve(`list/${result.data.id}`), { replace: true });
 		} else if (result.error != null) {
 			const formErrors = backendErrorsToFormErrors(result.error, listErrorMessages);
 			errors.set(formErrors);

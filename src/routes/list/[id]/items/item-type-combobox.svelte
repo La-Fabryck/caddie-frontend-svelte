@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { Button, Spinner } from '$lib/components/ui';
 	import {
 		Command,
 		CommandEmpty,
@@ -8,13 +6,15 @@
 		CommandInput,
 		CommandItem,
 		CommandList,
-	} from '$lib/components/ui/command';
-	import { Popover, PopoverContent, PopoverTrigger } from '$lib/components/ui/popover';
-	import { fetchData, mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { itemTypeErrorMessages } from '$lib/messages/item-type';
-	import type { ItemType } from '$lib/response/item-type';
-	import { cn } from '$lib/utils';
+	} from '#lib/components/ui/command/index.js';
+	import { Button, Spinner } from '#lib/components/ui/index.js';
+	import { Popover, PopoverContent, PopoverTrigger } from '#lib/components/ui/popover/index.js';
+	import { fetchData, mutateData } from '#lib/fetch/index.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { itemTypeErrorMessages } from '#lib/messages/item-type.js';
+	import type { ItemType } from '#lib/response/item-type.js';
+	import { cn } from '#lib/utils.js';
+	import { page } from '$app/state';
 	import CheckIcon from '@lucide/svelte/icons/check';
 	import ChevronsUpDownIcon from '@lucide/svelte/icons/chevrons-up-down';
 

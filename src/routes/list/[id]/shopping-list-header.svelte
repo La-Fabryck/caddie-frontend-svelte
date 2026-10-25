@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Menu from '$lib/components/menu.svelte';
-	import type { List } from '$lib/response/list';
+	import Menu from '#lib/components/menu.svelte';
+	import type { List } from '#lib/response/list.js';
 	import { Settings } from '@lucide/svelte';
 
 	type ShoppingListHeaderProps = { list: List };
@@ -22,8 +22,8 @@
 		<Menu
 			label="Actions de la liste"
 			items={[
-				{ label: 'Partager', path: `/list/${list.id}/share` },
-				{ label: 'Quitter', path: `/list/${list.id}/leave` },
+				{ label: 'Partager', path: `list/${list.id}/share` },
+				{ label: 'Quitter', path: `list/${list.id}/leave` },
 			]}
 		>
 			<Settings size={36} />

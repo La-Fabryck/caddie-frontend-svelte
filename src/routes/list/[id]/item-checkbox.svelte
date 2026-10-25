@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { Checkbox } from '$lib/components/ui';
-	import type { Item } from '$lib/response/item';
+	import { Checkbox } from '#lib/components/ui/index.js';
+	import type { Item } from '#lib/response/item.js';
 
 	type Props = {
 		item: Item;

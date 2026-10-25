@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Spinner } from '$lib/components/ui';
+	import { Spinner } from '#lib/components/ui/index.js';
 	import type { PageProps } from './$types';
 	import EditItemForm from './edit-item-form.svelte';
 

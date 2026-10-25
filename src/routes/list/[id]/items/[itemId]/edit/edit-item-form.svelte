@@ -1,8 +1,4 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
-	import { invalidateAll } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import {
 		Button,
 		Checkbox,
@@ -13,12 +9,15 @@
 		FormLabel,
 		Input,
 		Spinner,
-	} from '$lib/components/ui';
-	import { mutateData } from '$lib/fetch';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { itemErrorMessages } from '$lib/messages/item';
-	import type { Item } from '$lib/response/item';
+	} from '#lib/components/ui/index.js';
+	import { mutateData } from '#lib/fetch/index.js';
+	import { backendErrorsToFormErrors } from '#lib/helpers/form-errors.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { itemErrorMessages } from '#lib/messages/item.js';
+	import type { Item } from '#lib/response/item.js';
+	import { goto, refreshAll } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { superForm } from 'sveltekit-superforms';
 	import ItemTypeCombobox from '../../item-type-combobox.svelte';
 
@@ -35,8 +34,8 @@
 			isInCart: item.isInCart,
 			itemTypeId: item.itemTypeId,
 		}) satisfies EditItemFormData;
-	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 
+	const form = superForm(getInitialFormState(), { SPA: true, validators: false });
 	const { form: formData, errors } = form;
 
 	let submitting = $state(false);
@@ -53,8 +52,8 @@
 		submitting = false;
 
 		if (result.error == null && result.data != null) {
-			await invalidateAll();
-			goto(resolve(`/list/${item.listId}`), { replaceState: true });
+			await refreshAll();
+			goto(resolve(`list/${item.listId}`), { replace: true });
 		} else if (result.error != null) {
 			const formErrors = backendErrorsToFormErrors(result.error, itemErrorMessages);
 			errors.set(formErrors);

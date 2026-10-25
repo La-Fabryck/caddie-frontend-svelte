@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { invalidateAll } from '$app/navigation';
-	import { Button } from '$lib/components/ui';
-	import { Spinner } from '$lib/components/ui';
-	import type { Item } from '$lib/response/item';
-	import { cn } from '$lib/utils';
+	import { Button } from '#lib/components/ui/index.js';
+	import { Spinner } from '#lib/components/ui/index.js';
+	import type { Item } from '#lib/response/item.js';
+	import { cn } from '#lib/utils.js';
+	import { refreshAll } from '$app/navigation';
 	import type { PageProps } from './$types';
 	import RedirectWhenEmpty from './redirect-when-empty.svelte';
 	import RedirectWhenNotFound from './redirect-when-not-found.svelte';
@@ -48,7 +48,7 @@
 	<Spinner class="size-20" />
 {:then [listResult, itemsResult]}
 	{#if listResult.data == null}
-		<RedirectWhenNotFound url="/" />
+		<RedirectWhenNotFound url="" />
 	{:else}
 		{@const items = itemsResult.data ?? []}
 		{@const sortedItems =
@@ -94,7 +94,7 @@
 			{sortMode}
 			sections={itemSections}
 			invalidateItems={() => {
-				void invalidateAll();
+				void refreshAll();
 			}}
 			onActionChange={(v) => (action = v)}
 		/>

@@ -1,10 +1,10 @@
 <script lang="ts">
+	import { Button, Spinner } from '#lib/components/ui/index.js';
+	import { mutateData } from '#lib/fetch/index.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { subscriberErrorMessages } from '#lib/messages/subscriber.js';
+	import type { ShareLink } from '#lib/response/share-link.js';
 	import { page } from '$app/state';
-	import { Button, Spinner } from '$lib/components/ui';
-	import { mutateData } from '$lib/fetch';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { subscriberErrorMessages } from '$lib/messages/subscriber';
-	import type { ShareLink } from '$lib/response/share-link';
 	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();

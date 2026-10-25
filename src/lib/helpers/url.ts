@@ -1,4 +1,4 @@
-import type { Pathname } from '$app/types';
+import type { Path } from '$app/types';
 
 export const LOGIN_REDIRECT_PARAM = 'redirect';
 
@@ -47,16 +47,19 @@ function safeLoginRedirectPath(raw: string | null): string {
 }
 
 /**
- * Read and sanitize `?redirect=`; always a navigable path (`/` when nothing useful).
- * Cast: Kit's `Pathname` is a closed route union; a sanitized string can't prove membership.
+ * Read and sanitize `?redirect=`.
+ * Returns a Kit pathname (`''` is home, no leading slash). A sanitized string
+ * cannot prove membership of the route union, so the return is cast.
  */
-export function loginReturnPath(url: URL): Pathname {
-	return (safeLoginRedirectPath(url.searchParams.get(LOGIN_REDIRECT_PARAM)) || '/') as Pathname;
+export function loginReturnPath(url: { searchParams: { get(name: string): string | null } }): Path {
+	const pathname = safeLoginRedirectPath(url.searchParams.get(LOGIN_REDIRECT_PARAM));
+	return (pathname.startsWith('/') ? pathname.slice(1) : pathname) as Path;
 }
 
-/** `?redirect=…` when there is a destination, otherwise `''`. */
+/** `?redirect=…` when there is a destination, otherwise `''`. Accepts a Kit pathname or a URL pathname. */
 export function buildLoginRedirectSearch(returnPath: string): string {
-	const safe = safeLoginRedirectPath(returnPath);
+	const pathname = returnPath.startsWith('/') ? returnPath : `/${returnPath}`;
+	const safe = safeLoginRedirectPath(pathname);
 	if (safe === '') {
 		return '';
 	}

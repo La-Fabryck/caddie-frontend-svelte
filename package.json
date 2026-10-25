@@ -3,6 +3,10 @@
 	"version": "0.3.1",
 	"private": true,
 	"type": "module",
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
+	},
 	"scripts": {
 		"dev": "concurrently -n \"VITE,SVELTE-CHECK\" -c \"blue,green\" \"npm run dev:vite\" \"npm run dev:watch\"",
 		"dev:vite": "vite dev",
@@ -24,8 +28,9 @@
 		"@eslint/js": "^10.0.1",
 		"@internationalized/date": "^3.12.4",
 		"@lucide/svelte": "^1.61.0",
-		"@sveltejs/adapter-node": "^5.5.7",
-		"@sveltejs/kit": "^2.70.3",
+		"@sveltejs/adapter-node": "^6.0.0",
+		"@sveltejs/kit": "^3.0.0",
+		"@sveltejs/load-config": "^0.2.2",
 		"@sveltejs/vite-plugin-svelte": "^7.3.1",
 		"@tailwindcss/vite": "^4.3.3",
 		"@types/node": "^26",
@@ -44,7 +49,7 @@
 		"playwright": "^1.64.1",
 		"svelte": "^5.57.2",
 		"svelte-check": "^4.7.7",
-		"sveltekit-superforms": "^2.31.0",
+		"sveltekit-superforms": "^3.0.0",
 		"tailwind-merge": "^3.7.0",
 		"tailwind-variants": "^3.3.1",
 		"tailwindcss": "^4.3.3",

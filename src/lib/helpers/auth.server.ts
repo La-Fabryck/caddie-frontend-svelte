@@ -1,5 +1,5 @@
-import { UNAUTHORIZED_STATUS_CODE } from '$lib/fetch';
-import { buildLoginHref } from '$lib/helpers/url';
+import { UNAUTHORIZED_STATUS_CODE } from '#lib/fetch/index.js';
+import { buildLoginHref } from '#lib/helpers/url.js';
 import { redirect } from '@sveltejs/kit';
 
 /** HTTP 303 See Other — client must follow with GET (right for send-to-login). */

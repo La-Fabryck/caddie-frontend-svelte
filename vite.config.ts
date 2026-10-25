@@ -1,4 +1,6 @@
+import adapter from '@sveltejs/adapter-node';
 import { sveltekit } from '@sveltejs/kit/vite';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 /* eslint-disable no-console */
 import tailwindcss from '@tailwindcss/vite';
 import { playwright } from '@vitest/browser-playwright';
@@ -14,7 +16,22 @@ export default defineConfig(({ mode }) => {
 	}
 
 	return {
-		plugins: [tailwindcss(), sveltekit()],
+		plugins: [
+			tailwindcss(),
+			sveltekit({
+				// Consult https://svelte.dev/docs/kit/integrations
+				// for more information about preprocessors
+				preprocess: vitePreprocess(),
+
+				// alias: {
+				// 	// an alias ending /* will only match
+				// 	// the contents of a directory, not the directory itself
+				// 	// '$components/*': 'src/components/*'
+				// },
+				extensions: ['.svelte'],
+				adapter: adapter(),
+			}),
+		],
 		server: {
 			host: '0.0.0.0',
 			proxy: {

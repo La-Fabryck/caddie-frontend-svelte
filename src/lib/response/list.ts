@@ -1,4 +1,4 @@
-import type { DateString } from '$lib/helpers/date';
+import type { DateString } from '#lib/helpers/date.js';
 
 /** Backend min for GET /list `limit` is 10. */
 export const LIST_PAGE_LIMIT = 10;

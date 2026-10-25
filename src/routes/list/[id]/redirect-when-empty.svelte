@@ -11,7 +11,7 @@
 
 	$effect(() => {
 		if (items?.length === 0) {
-			goto(resolve(`/list/${listId}/items/add`));
+			goto(resolve(`list/${listId}/items/add`));
 		}
 	});
 </script>

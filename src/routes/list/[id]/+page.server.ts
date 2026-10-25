@@ -1,8 +1,8 @@
-import { fetchData } from '$lib/fetch';
-import { redirectIfUnauthorized } from '$lib/helpers/auth.server';
-import { buildApiUrl } from '$lib/helpers/url';
-import type { Item } from '$lib/response/item';
-import type { List } from '$lib/response/list';
+import { fetchData } from '#lib/fetch/index.js';
+import { redirectIfUnauthorized } from '#lib/helpers/auth.server.js';
+import { buildApiUrl } from '#lib/helpers/url.js';
+import type { Item } from '#lib/response/item.js';
+import type { List } from '#lib/response/list.js';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ fetch, url, params }) => {

@@ -1,7 +1,7 @@
 <script lang="ts">
+	import { Button, buttonVariants } from '#lib/components/ui/index.js';
+	import type { Item } from '#lib/response/item.js';
 	import { resolve } from '$app/paths';
-	import { Button, buttonVariants } from '$lib/components/ui';
-	import type { Item } from '$lib/response/item';
 	import { Plus, SquareArrowOutUpRight, Trash2 } from '@lucide/svelte';
 	import DeleteShoppingItem, { type ItemToDeleteTuple } from './delete-shopping-item.svelte';
 	import SelectShoppingItem from './select-shopping-item.svelte';
@@ -54,11 +54,9 @@
 {#if action === 'selection'}
 	<a
 		class={buttonVariants({ variant: 'default', size: 'lg', class: 'mb-3 font-semibold' })}
-		href={resolve(`/list/${listId}/items/add`)}
+		href={resolve(`list/${listId}/items/add`)}><Plus />Ajoute un article</a
 	>
-		<Plus />
-		Ajoute un article
-	</a>
+
 	{#if items.length === 0}
 		<p>Pas d'articles trouvés</p>
 	{:else}
@@ -102,7 +100,7 @@
 							>
 								<a
 									class="flex flex-1 cursor-pointer items-center px-3 py-2"
-									href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
+									href={resolve(`list/${item.listId}/items/${item.id}/edit`)}
 								>
 									<SquareArrowOutUpRight class="text-pink" />
 									<span class="ml-2 text-sm">
@@ -122,7 +120,7 @@
 						>
 							<a
 								class="flex flex-1 cursor-pointer items-center px-3 py-2"
-								href={resolve(`/list/${item.listId}/items/${item.id}/edit`)}
+								href={resolve(`list/${item.listId}/items/${item.id}/edit`)}
 							>
 								<SquareArrowOutUpRight class="text-pink" />
 								<span class="ml-2 text-sm">

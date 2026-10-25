@@ -1,9 +1,9 @@
 <script lang="ts">
+	import { mutateData } from '#lib/fetch/index.js';
+	import { debounce } from '#lib/helpers/debounce.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import type { Item } from '#lib/response/item.js';
 	import { page } from '$app/state';
-	import { mutateData } from '$lib/fetch';
-	import { debounce } from '$lib/helpers/debounce';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import type { Item } from '$lib/response/item';
 	import ItemCheckbox from './item-checkbox.svelte';
 
 	type Props = {

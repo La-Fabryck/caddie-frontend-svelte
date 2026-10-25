@@ -1,12 +1,12 @@
 <script lang="ts">
+	import Menu from '#lib/components/menu.svelte';
+	import { Button, Spinner } from '#lib/components/ui/index.js';
+	import { fetchData, mutateData } from '#lib/fetch/index.js';
+	import { formatDateToISO, formatDateToLongFormat } from '#lib/helpers/date.js';
+	import { buildApiUrl, buildListCollectionUrl } from '#lib/helpers/url.js';
+	import { LIST_PAGE_LIMIT, type List, type PaginatedLists } from '#lib/response/list.js';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
-	import Menu from '$lib/components/menu.svelte';
-	import { Button, Spinner } from '$lib/components/ui';
-	import { fetchData, mutateData } from '$lib/fetch';
-	import { formatDateToISO, formatDateToLongFormat } from '$lib/helpers/date';
-	import { buildApiUrl, buildListCollectionUrl } from '$lib/helpers/url';
-	import { LIST_PAGE_LIMIT, type List, type PaginatedLists } from '$lib/response/list';
 	import { Settings } from '@lucide/svelte';
 	import { untrack } from 'svelte';
 
@@ -77,7 +77,7 @@
 	<ul>
 		{#each lists as list (list.id)}
 			<li class="my-2 flex justify-between gap-x-6 bg-surface0 p-5 hover:bg-surface1">
-				<a href={resolve(`/list/${list.id}`)} class="flex min-w-0 flex-auto gap-x-4">
+				<a href={resolve(`list/${list.id}`)} class="flex min-w-0 flex-auto gap-x-4">
 					<div class="min-w-0 flex-auto">
 						<p class="text-lg font-bold">{list.title}</p>
 						<p class="mt-1 truncate text-xs/5">
@@ -91,6 +91,7 @@
 							<div class="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
 								<p class="text-xs/5">{list.isArchived ? 'Archivée' : 'En cours'}</p>
 							</div>
+
 							<div
 								class="rounded-full p-1 {list.isArchived ? 'bg-destructive' : 'bg-green'}"
 								aria-hidden="true"
@@ -113,7 +114,7 @@
 					<Menu
 						label="Actions de la liste"
 						items={[
-							{ label: 'Modifier', path: `/list/${list.id}/edit` },
+							{ label: 'Modifier', path: `list/${list.id}/edit` },
 							{
 								label:
 									togglingId === list.id
@@ -126,7 +127,7 @@
 									void toggleArchive(list);
 								},
 							},
-							{ label: 'Supprimer', path: `/list/${list.id}/delete` },
+							{ label: 'Supprimer', path: `list/${list.id}/delete` },
 						]}
 					>
 						<Settings size={36} />

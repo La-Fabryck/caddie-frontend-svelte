@@ -1,7 +1,4 @@
 <script lang="ts">
-	import { goto, invalidateAll } from '$app/navigation';
-	import { resolve } from '$app/paths';
-	import { page } from '$app/state';
 	import {
 		Button,
 		FormControl,
@@ -11,12 +8,15 @@
 		FormLabel,
 		Input,
 		Spinner,
-	} from '$lib/components/ui';
-	import { deleteData } from '$lib/fetch';
-	import { backendErrorsToFormErrors } from '$lib/helpers/form-errors';
-	import { buildApiUrl } from '$lib/helpers/url';
-	import { subscriberErrorMessages } from '$lib/messages/subscriber';
-	import type { List } from '$lib/response/list';
+	} from '#lib/components/ui/index.js';
+	import { deleteData } from '#lib/fetch/index.js';
+	import { backendErrorsToFormErrors } from '#lib/helpers/form-errors.js';
+	import { buildApiUrl } from '#lib/helpers/url.js';
+	import { subscriberErrorMessages } from '#lib/messages/subscriber.js';
+	import type { List } from '#lib/response/list.js';
+	import { goto, refreshAll } from '$app/navigation';
+	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import { superForm } from 'sveltekit-superforms';
 
 	type LeaveListFormData = Pick<List, 'title'>;
@@ -45,8 +45,8 @@
 		submitting = false;
 
 		if (result.error == null) {
-			await invalidateAll();
-			goto(resolve('/'), { replaceState: true });
+			await refreshAll();
+			goto(resolve(''), { replace: true });
 			return;
 		}
 

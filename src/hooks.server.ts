@@ -1,3 +1,4 @@
+import { UNAUTHORIZED_STATUS_CODE } from '#lib/fetch/index.js';
 /**
  * SvelteKit server hooks (`hooks.server.ts`) run in the Node/server runtime and customize how
  * requests are handled and how server-side `fetch` calls behave.
@@ -15,10 +16,8 @@
  *
  * @see https://svelte.dev/docs/kit/hooks — Server hooks
  */
-
-import { env } from '$env/dynamic/private';
-import { UNAUTHORIZED_STATUS_CODE } from '$lib/fetch';
-import type { Handle, HandleFetch } from '@sveltejs/kit';
+import { VITE_BACKEND_URL, VITE_FRONTEND_URL, VITE_API_BASE_URL } from '$app/env/private';
+import type { Handle, HandleFetch } from '@sveltejs/kit/hooks';
 
 const ALLOWED_HEADERS = ['content-type', 'content-length', 'content-encoding', 'set-cookie'];
 
@@ -53,8 +52,8 @@ export async function handle({
 
 // `$env/dynamic/private` loads `.env` in `vite dev` and runtime `process.env` in adapter-node.
 // Plain `process.env.VITE_*` is empty under Vite SSR, which broke refresh URL construction.
-const BACKEND_URL = env['VITE_BACKEND_URL'];
-const FRONTEND_URL = `${env['VITE_FRONTEND_URL']}${env['VITE_API_BASE_URL']}`;
+const BACKEND_URL = VITE_BACKEND_URL;
+const FRONTEND_URL = `${VITE_FRONTEND_URL}${VITE_API_BASE_URL}`;
 const REFRESH_ENDPOINT_PATH = '/authentication/refresh';
 
 if (BACKEND_URL == null || BACKEND_URL.length === 0) {

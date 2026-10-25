@@ -1,25 +1,16 @@
 <script lang="ts">
-	import { resolve } from '$app/paths';
-	import type { Pathname } from '$app/types';
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
 		DropdownMenuItem,
 		DropdownMenuTrigger,
-	} from '$lib/components/ui/dropdown-menu';
+	} from '#lib/components/ui/dropdown-menu/index.js';
+	import { resolve } from '$app/paths';
+	import type { Path } from '$app/types';
 	import type { Snippet } from 'svelte';
 
-	type MenuLinkItem = {
-		label: string;
-		path: Pathname;
-	};
-
-	type MenuActionItem = {
-		label: string;
-		action: () => void;
-		disabled?: boolean;
-	};
-
+	type MenuLinkItem = { label: string; path: Path };
+	type MenuActionItem = { label: string; action: () => void; disabled?: boolean };
 	type MenuItem = MenuLinkItem | MenuActionItem;
 
 	function isLinkItem(item: MenuItem): item is MenuLinkItem {
@@ -30,12 +21,9 @@
 		items,
 		children,
 		label = 'Actions',
-	}: {
-		items: MenuItem[];
-		children: Snippet;
+
 		/** Accessible name for the icon-only trigger. */
-		label?: string;
-	} = $props();
+	}: { items: MenuItem[]; children: Snippet; label?: string } = $props();
 </script>
 
 <DropdownMenu>
