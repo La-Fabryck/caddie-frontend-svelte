@@ -32,8 +32,8 @@
   - Add website icon (favicon + app icons if needed).
 - DX / quality
   - [x] Lefthook (oxfmt + eslint on staged files + typecheck).
-  - Superforms 3 / SvelteKit 3: formsnap 2.0.1 peers superforms ^2.19 only — https://github.com/svecosystem/formsnap/issues/234. Keep the shadcn Form wrappers; a local replacement would be ours to maintain, and shadcn-svelte will likely move off formsnap. Until then, override formsnap's superforms peer so 3.x installs (appears to work). Still confirm field errors render — AdelieStack saw them go blank under that override: https://github.com/BradNut/AdelieStack/issues/95.
-  - Reinstall every shadcn-svelte component from the registry (overwrite `src/lib/components/ui` with the CLI, don't hand-edit). Kit 3 and `@sveltejs/adapter-node` 6 still wait on the formsnap peer above. Svelte is already on latest 5.
+  - [x] Superforms 3 / SvelteKit 3. formsnap 2.1.0 peers superforms ^2.19 and ^3, so no peer override.
+  - Reinstall every shadcn-svelte component from the registry (overwrite `src/lib/components/ui` with the CLI, don't hand-edit).
 - UI styling
   - Improve overall layout and visual hierarchy.
   - Refine Tailwind styling for consistent spacing and typography.
