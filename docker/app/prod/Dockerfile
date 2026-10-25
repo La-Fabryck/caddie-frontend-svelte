@@ -1,5 +1,8 @@
+# Keep in sync with .node-version (strip leading v)
+ARG NODE_VERSION=26.12.1
+
 # Stage 1: Build the app (SvelteKit + adapter-node)
-FROM node:26-alpine AS builder
+FROM node:${NODE_VERSION}-alpine AS builder
 
 WORKDIR /app
 
@@ -14,7 +17,7 @@ RUN npm run build
 # Outputs to /app/build
 
 # Stage 2: Production runtime
-FROM node:26-alpine AS runner
+FROM node:${NODE_VERSION}-alpine AS runner
 
 WORKDIR /app
 
