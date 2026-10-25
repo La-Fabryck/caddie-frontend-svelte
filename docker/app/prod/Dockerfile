@@ -6,7 +6,7 @@ FROM node:${NODE_VERSION}-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json tsconfig*.json svelte.config.js vite.config.ts .npmrc ./
+COPY package*.json tsconfig*.json vite.config.ts .npmrc ./
 
 RUN npm ci --prefer-offline
 
