@@ -12,6 +12,15 @@ RUN npm ci --prefer-offline
 
 COPY . /app
 
+# Compose env_file applies only when the container starts. Kit validates these
+# while analysing routes, and Vite reads them from the build environment.
+ARG VITE_BACKEND_URL
+ARG VITE_FRONTEND_URL
+ARG VITE_API_BASE_URL
+ENV VITE_BACKEND_URL=$VITE_BACKEND_URL \
+	VITE_FRONTEND_URL=$VITE_FRONTEND_URL \
+	VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 ENV NODE_ENV=production
 RUN npm run build
 # Outputs to /app/build

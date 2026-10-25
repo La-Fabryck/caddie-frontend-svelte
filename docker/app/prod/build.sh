@@ -12,5 +12,5 @@ fi
 cd "$ROOT_DIR"
 
 export COMPOSE_BAKE=true
-exec docker compose -f docker/app/prod/compose.yml up -d --build
+exec docker compose --env-file "$SCRIPT_DIR/.env" -f docker/app/prod/compose.yml up -d --build
 
