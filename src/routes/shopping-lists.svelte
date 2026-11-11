@@ -93,11 +93,15 @@
 							</div>
 
 							<div
-								class="rounded-full p-1 {list.isArchived ? 'bg-destructive' : 'bg-green'}"
+								class="rounded-full p-1 {list.isArchived
+									? 'bg-destructive'
+									: 'bg-green'}"
 								aria-hidden="true"
 							>
 								<div
-									class="size-1.5 rounded-full {list.isArchived ? 'bg-destructive' : 'bg-green'}"
+									class="size-1.5 rounded-full {list.isArchived
+										? 'bg-destructive'
+										: 'bg-green'}"
 								></div>
 							</div>
 						</div>

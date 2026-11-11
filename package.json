@@ -45,7 +45,7 @@
 		"formsnap": "^2.1.0",
 		"globals": "^17.14.0",
 		"lefthook": "^2.2.2",
-		"oxfmt": "^0.73.0",
+		"oxfmt": "^0.78.0",
 		"playwright": "^1.65.0",
 		"svelte": "^5.57.3",
 		"svelte-check": "^4.7.8",

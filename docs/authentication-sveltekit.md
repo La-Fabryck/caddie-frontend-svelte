@@ -27,9 +27,9 @@ Build API URLs with [`src/lib/helpers/url.ts`](../src/lib/helpers/url.ts) (`buil
 
 - All JSON helpers (`fetchData`, `mutateData`, `deleteData`) wrap requests with **`requestWithSingleFlightRefresh`**.
 - On **`401`** for an `/api/*` URL (in the browser only), the wrapper:
-  1. Starts or joins a **single** in-flight `POST /api/authentication/refresh` (`refreshPromise`).
-  2. On success, **retries the original request once**.
-  3. On refresh failure, returns the **original `401` response** (no uncaught throw from the refresh step).
+    1. Starts or joins a **single** in-flight `POST /api/authentication/refresh` (`refreshPromise`).
+    2. On success, **retries the original request once**.
+    3. On refresh failure, returns the **original `401` response** (no uncaught throw from the refresh step).
 
 Refresh is **not** attempted for:
 
@@ -52,8 +52,8 @@ Refresh logic is **browser-only** on purpose: a module-level `refreshPromise` mu
 - First proxied request uses **`fetch(proxiedRequest.clone())`** so the body stream is not consumed for a later retry.
 - On **`401`**, it calls the backend **`POST {VITE_BACKEND_URL}/authentication/refresh`** with the same cookies.
 - If refresh returns **`Set-Cookie`**, those lines are:
-  - merged into the **`Cookie`** header used for the **retry** of the original API call (`mergeCookieHeader`), and
-  - appended to **`event.locals.refreshedSetCookies`** for the browser (see below).
+    - merged into the **`Cookie`** header used for the **retry** of the original API call (`mergeCookieHeader`), and
+    - appended to **`event.locals.refreshedSetCookies`** for the browser (see below).
 
 Refresh is skipped for proxied `/api/authentication/refresh`, `/api/authentication/login`, and `/api/users`.
 

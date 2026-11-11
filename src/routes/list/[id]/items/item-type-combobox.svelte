@@ -159,7 +159,9 @@
 									<CheckIcon
 										class={cn(
 											'ml-auto size-4',
-											selectedItemTypeId === itemType.id ? 'opacity-100' : 'opacity-0',
+											selectedItemTypeId === itemType.id
+												? 'opacity-100'
+												: 'opacity-0',
 										)}
 									/>
 								</CommandItem>

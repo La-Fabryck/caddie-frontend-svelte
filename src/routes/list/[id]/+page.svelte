@@ -35,7 +35,10 @@
 
 	function buildTypeSections(items: Item[]): ItemSection[] {
 		const sortedItems = items.toSorted((a, b) => compareByType(a, b));
-		const groupedByLabel = Object.groupBy(sortedItems, (item) => item.itemType?.label ?? 'Autre');
+		const groupedByLabel = Object.groupBy(
+			sortedItems,
+			(item) => item.itemType?.label ?? 'Autre',
+		);
 
 		return Object.entries(groupedByLabel).map(([label, sectionItems]) => ({
 			label,

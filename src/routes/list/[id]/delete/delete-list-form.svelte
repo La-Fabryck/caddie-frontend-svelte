@@ -62,8 +62,8 @@
 			<FormControl>
 				{#snippet children({ props: controlProps })}
 					<FormLabel>
-						Cette action est irréversible. Es-tu que tu tu tu turlututu es sur de chez sur ? La
-						liste suivante va être supprimée. Oh non 😢
+						Cette action est irréversible. Es-tu que tu tu tu turlututu es sur de chez
+						sur ? La liste suivante va être supprimée. Oh non 😢
 					</FormLabel>
 					<Input {...controlProps} disabled bind:value={$formData.title} />
 				{/snippet}

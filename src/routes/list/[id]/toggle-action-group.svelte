@@ -24,7 +24,11 @@
 	<Button
 		variant="outline"
 		size="lg"
-		class={cn(baseClass, 'border', action === 'selection' && 'bg-accent text-accent-foreground')}
+		class={cn(
+			baseClass,
+			'border',
+			action === 'selection' && 'bg-accent text-accent-foreground',
+		)}
 		aria-pressed={action === 'selection'}
 		aria-label="selection"
 		onclick={() => onActionChange('selection')}

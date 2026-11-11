@@ -82,7 +82,11 @@
 					<FormControl>
 						{#snippet children({ props: controlProps })}
 							<FormLabel>Nom de l'article</FormLabel>
-							<Input {...controlProps} placeholder="🍔 ou 🍫" bind:value={$formData.name} />
+							<Input
+								{...controlProps}
+								placeholder="🍔 ou 🍫"
+								bind:value={$formData.name}
+							/>
 						{/snippet}
 					</FormControl>
 					<FormDescription>Tu veux acheter quoi encore 🤌 ⁉️</FormDescription>
@@ -105,7 +109,9 @@
 							/>
 						{/snippet}
 					</FormControl>
-					<FormDescription>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription>
+					<FormDescription
+						>Pas besoin de mettre la quantité si c'est 1 fieu 🫪</FormDescription
+					>
 					<FormFieldErrors />
 				{/snippet}
 			</FormElementField>

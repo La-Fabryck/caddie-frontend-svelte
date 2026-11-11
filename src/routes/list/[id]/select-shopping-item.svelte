@@ -19,7 +19,10 @@
 
 	const debouncedPatch = debounce(async (checked: boolean, currentItem: Item) => {
 		if (currentItem.isInCart === checked) return;
-		const url = buildApiUrl(page.url.origin, `list/${currentItem.listId}/items/${currentItem.id}`);
+		const url = buildApiUrl(
+			page.url.origin,
+			`list/${currentItem.listId}/items/${currentItem.id}`,
+		);
 		const result = await mutateData<Item>({
 			fetch,
 			url: url.toString(),

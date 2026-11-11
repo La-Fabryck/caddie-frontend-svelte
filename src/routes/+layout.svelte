@@ -26,7 +26,9 @@
 		class="preview flex w-full justify-center p-2 data-[align=center]:items-center data-[align=end]:items-end data-[align=start]:items-start"
 	>
 		<div class="container-wrapper 3xl:fixed:px-0 px-6">
-			<div class="3xl:fixed:container h-(--header-height) gap-2 **:data-[slot=separator]:h-4!">
+			<div
+				class="3xl:fixed:container h-(--header-height) gap-2 **:data-[slot=separator]:h-4!"
+			>
 				<NavigationMenuRoot>
 					<NavigationMenuList class="flex flex-row items-center justify-center">
 						<NavigationMenuItem>

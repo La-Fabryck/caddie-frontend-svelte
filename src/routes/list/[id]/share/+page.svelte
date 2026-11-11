@@ -14,7 +14,9 @@
 	let errorMessage = $state<string | null>(null);
 	let copied = $state(false);
 
-	const joinUrl = $derived(shareLink == null ? null : `${page.url.origin}/join/${shareLink.token}`);
+	const joinUrl = $derived(
+		shareLink == null ? null : `${page.url.origin}/join/${shareLink.token}`,
+	);
 
 	async function createShareLink(listId: string) {
 		creating = true;

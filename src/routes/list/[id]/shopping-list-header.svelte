@@ -14,7 +14,9 @@
 			{list.title || 'Ma liste'}
 		</h2>
 		<span
-			class="mt-1 size-2.5 shrink-0 rounded-full {list.isArchived ? 'bg-destructive' : 'bg-green'}"
+			class="mt-1 size-2.5 shrink-0 rounded-full {list.isArchived
+				? 'bg-destructive'
+				: 'bg-green'}"
 			role="img"
 			aria-label={list.isArchived ? 'Liste archivée' : 'Liste en cours'}
 			title={list.isArchived ? 'Archivée' : 'En cours'}

@@ -76,7 +76,8 @@
 			<FormControl>
 				{#snippet children({ props: controlProps })}
 					<FormLabel>
-						Tu vas quitter cette liste. Tu pourras la rejoindre à nouveau avec un lien de partage.
+						Tu vas quitter cette liste. Tu pourras la rejoindre à nouveau avec un lien
+						de partage.
 					</FormLabel>
 					<Input {...controlProps} disabled bind:value={$formData.title} />
 				{/snippet}
