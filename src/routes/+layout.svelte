@@ -5,7 +5,7 @@
 		NavigationMenuItem,
 		NavigationMenuLink,
 		NavigationMenuList,
-		NavigationMenuRoot,
+		NavigationMenu,
 		navigationMenuTriggerStyle,
 	} from '#lib/components/ui/index.js';
 	import { buildLoginRedirectSearch } from '#lib/helpers/url.js';
@@ -29,7 +29,7 @@
 			<div
 				class="3xl:fixed:container h-(--header-height) gap-2 **:data-[slot=separator]:h-4!"
 			>
-				<NavigationMenuRoot>
+				<NavigationMenu>
 					<NavigationMenuList class="flex flex-row items-center justify-center">
 						<NavigationMenuItem>
 							<NavigationMenuLink>
@@ -70,7 +70,7 @@
 							</NavigationMenuLink>
 						</NavigationMenuItem>
 					</NavigationMenuList>
-				</NavigationMenuRoot>
+				</NavigationMenu>
 			</div>
 		</div>
 	</nav>

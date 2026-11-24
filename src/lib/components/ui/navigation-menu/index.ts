@@ -16,9 +16,8 @@ export {
 	List,
 	Trigger,
 	Viewport,
-	navigationMenuTriggerStyle,
 	//
-	Root as NavigationMenuRoot,
+	Root as NavigationMenu,
 	Content as NavigationMenuContent,
 	Indicator as NavigationMenuIndicator,
 	Item as NavigationMenuItem,
@@ -26,4 +25,5 @@ export {
 	List as NavigationMenuList,
 	Trigger as NavigationMenuTrigger,
 	Viewport as NavigationMenuViewport,
+	navigationMenuTriggerStyle,
 };
